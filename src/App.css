@@ -1,0 +1,126 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  background: linear-gradient(
+    200.96deg,
+    /* #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35% */ #8b5ab0 9.35%,
+    #4e6fc3,
+    #007ec3,
+    #0088b2,
+    #008d97,
+    #008f7a
+  );
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navigation {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #008d97;
+  color: white;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+.navigation:hover {
+  text-decoration: none;
+  background-color: #ddd;
+  color: black;
+}
+
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.nav-txt {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.demo {
+  margin-right: 20px;
+}
+
+.content {
+  margin-left: 160px;
+  margin-right: 160px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.button-div {
+  padding: 15px;
+}
+
+.button-link {
+  text-decoration: none;
+  color: white;
+  background-color: #28242c;
+  padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+}
+
+.button-link:hover {
+  background-color: rgb(180, 180, 180);
+  color: black;
+}
+
+.button {
+  text-decoration: none;
+  color: white;
+  background-color: #28242c;
+  padding: 7px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border-radius: 5px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: rgb(180, 180, 180);
+  color: black;
+}
