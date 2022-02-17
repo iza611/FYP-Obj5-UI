@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import fox from "./../animals/fox-silhouette.svg";
-import "./front-page.css"
-import LicenseText from './photo-license';
+import "./front-page.css";
 
 function FrontPage() {
   return (
@@ -17,9 +16,6 @@ function FrontPage() {
           </div>
           <div className="button-div">
                 <Link className="button-link" to="/about">About</Link>
-          </div>
-          <div>
-              <LicenseText />
           </div>
       </React.Fragment>
     

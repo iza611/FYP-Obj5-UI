@@ -9,6 +9,7 @@ import ExistingProjectPage from './pages/existing-project-page';
 import LoadingPage from './pages/loading';
 import Results from './pages/results';
 import React, { Component } from 'react';
+import LicenseText from './pages/photo-license';
 
 class App extends Component {
   state = { 
@@ -29,6 +30,8 @@ class App extends Component {
             <button onClick={this.handleClick2}>run node script2</button>
             <span className='text-light'>{this.state.serverMessage2}</span>
             <button onClick={this.handleClick3}>post msg</button>
+            <button onClick={this.handleClick4}>run python script</button>
+            <button onClick={this.handleClick5}>get node module dir</button>
           </div>
 
           <div className="content">
@@ -41,6 +44,8 @@ class App extends Component {
               <Route path="/results" element={<Results />} />
             </Routes>
           </div>
+
+          <LicenseText/>
 
         </div>
       
@@ -89,6 +94,28 @@ class App extends Component {
     })
     .catch((error) => {
       this.setState({ serverMessage2: error});
+    });
+  }
+
+  handleClick4 = () => {
+    fetch('http://localhost:8000/run/python/script')
+    .then(res => res.text())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  handleClick5 = () => {
+    fetch('http://localhost:8000/module/dir')
+    .then(res => res.text())
+    .then((dir) => {
+      console.log(dir);
+    })
+    .catch((error) => {
+      console.log(error);
     });
   }
 }

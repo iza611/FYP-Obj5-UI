@@ -12,7 +12,8 @@
     #008d97,
     #008f7a
   );
-  background-image: url("./animals/wild-forest.jpeg");
+  background-image: url("./animals/forest1 copy.jpg");
+  background-size: cover;
 }
 
 .App-logo {
@@ -86,7 +87,7 @@
   margin-right: 160px;
   margin-top: 20px;
   padding-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .button-div {
@@ -124,4 +125,13 @@
 .button:hover {
   background-color: rgb(180, 180, 180);
   color: black;
+}
+
+.license-text {
+  position: absolute;
+  /* margin-top: 10px; */
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  font-size: 10px;
 }

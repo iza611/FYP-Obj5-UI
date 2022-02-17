@@ -55,3 +55,10 @@ testNodeModule.tryUsingFs();
 
 testNodeModule.startExpressServer();
 console.log("server listening on port 8000...");
+
+//python
+const pythonScript = new testNodeModule.PythonScript();
+pythonScript.on('scriptCompleted', (results) => {
+  console.log(results);
+});
+pythonScript.runPythonScript();
