@@ -27,7 +27,6 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-    <!-- <script src="scripts/require.js"></script> -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -42,35 +41,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script type="text/javascript">
-      function accessFile(){
-        //let fs = requirejs(['fs'])
-        const filename = '/Users/ozogiz01/OneDrive - StepStone Group/Desktop/Metadata (non-human images only).json'
-     
-        /*requirejs(['fs.existsSync'], function (readFileSync) {
-          let data = fs.readFileSync(filename, 'utf8').split('\n')
-          console.log(typeof(data))
-        });*/
-
-         //Check if file exists
-         if(fs.existsSync(filename)) {
-         let data = fs.readFileSync(filename, 'utf8').split('\n')
-         
-         console.log(typeof(data))
-      
-        } else {
-          console.log("File Doesn't Exist. Creating new file.")
-          fs.writeFile(filename, '', (err) => {
-              if(err)
-                console.log(err)
-          })
-     }
-    }
-    </script>
-    <script type="text/javascript">
-      function test(){
-        console.log("i am running in js script!")
-     }
-    </script>
   </body>
 </html>

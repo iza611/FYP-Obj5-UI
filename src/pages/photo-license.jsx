@@ -4,16 +4,16 @@ import React from 'react';
 function LicenseText() {
     return (
     <div className="license-text">
-      <span className="text-dark">Image: </span>
+      <span className="text-light">Image: </span>
       <a
         href="https://www.vecteezy.com/free-vector/animal-svg"
-        className="link-dark"
+        className="link-light"
         target="_blank"
         rel="noreferrer noopener"
       >
         "Fox silhouette" by Nouri Atchabao
       </a>
-      <span className="text-dark">
+      <span className="text-light">
         , Licensed under Vecteezy License Agreement, Converted to .svg
       </span>
     </div>

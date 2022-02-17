@@ -1,5 +1,4 @@
 const electron = require('electron');
-let fs = require('fs');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
@@ -10,7 +9,11 @@ const isDev = require('electron-is-dev');
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({width: 900, height: 680});
+  mainWindow = new BrowserWindow({
+    width: 900, 
+    height: 690,
+    resizable: false
+  });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow.on('closed', () => mainWindow = null);
 }
@@ -28,3 +31,27 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+const testNodeModule = require('0-node-module-test');
+testNodeModule.tryUsingFs();
+
+// server
+// testNodeModule.startServer();
+// console.log("server listening on port 8000...");
+
+// const server = new testNodeModule.Server();
+
+// server.on('portEstablished', function(port){
+//   server.startServer(port);
+//   console.log("server listening on port ", port, "...");
+// });
+
+// server.findPort();
+
+// const { ipcMain } = require('electron');
+// ipcMain.on('request-port', (event, arg) => {
+//   event.reply('reply-port', 'pong');
+// });
+
+testNodeModule.startExpressServer();
+console.log("server listening on port 8000...");

@@ -12,6 +12,7 @@
     #008d97,
     #008f7a
   );
+  background-image: url("./animals/wild-forest.jpeg");
 }
 
 .App-logo {
@@ -85,7 +86,7 @@
   margin-right: 160px;
   margin-top: 20px;
   padding-bottom: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .button-div {
