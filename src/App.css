@@ -12,7 +12,7 @@
     #008d97,
     #008f7a
   );
-  background-image: url("./animals/forest2 copy.jpg");
+  background-image: url("./animals/forest1 copy.jpg");
   background-size: cover;
 }
 
@@ -69,6 +69,7 @@
   padding-right: 20px;
   padding-left: 20px;
   border-radius: 5px;
+  border: none;
 }
 
 .button-link:hover {
@@ -76,24 +77,6 @@
   color: black;
   border: 1px darkgoldenrod solid;
 }
-
-/* .button {
-  text-decoration: none;
-  color: white;
-  background-color: #28242c;
-  padding: 7px;
-  padding-right: 15px;
-  padding-left: 15px;
-  border-radius: 5px;
-  border: none;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.button:hover {
-  background-color: rgb(180, 180, 180);
-  color: black;
-} */
 
 .a-la-button {
   text-decoration: none;
@@ -108,11 +91,6 @@
 }
 
 .license-text {
-  /* position: absolute; */
-  /* margin-top: 10px; */
-  /* bottom: 2px; */
-  /* left: 0;
-  right: 0; */
   margin-top: 27px;
   font-size: 10px;
 }
@@ -161,7 +139,6 @@
   border-radius: 5px;
   border: none;
   margin: 2px;
-  /* width: fit-content; */
 }
 
 .species:hover {
@@ -179,4 +156,58 @@
   border-radius: 5px;
   border: none;
   margin: 2px;
+}
+
+.species-clicked {
+  color: black;
+  background-color: rgb(180, 180, 180);
+  border: 1px darkgoldenrod solid;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+.gg-check-o {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  border-radius: 100px;
+}
+.gg-check-o::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  left: 3px;
+  top: -1px;
+  width: 6px;
+  height: 10px;
+  border-color: currentColor;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  transform-origin: bottom left;
+  transform: rotate(45deg);
+}
+
+.gg-shape-circle {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  border-radius: 100px;
+}
+
+.section1 {
+  height: 80px;
+}
+
+.section2 {
+  height: 480px;
 }

@@ -10,8 +10,11 @@ class LoadingPage extends Component {
     return (
       <>
       <div>
-          <label class="switch">
+          <label className="switch">
             <input type="checkbox" onChange={this.handleCheckbox}/>
+          </label>
+          <label className="switch">
+            <input type="checkbox" onChange={this.props.changeNextPg}/>
           </label>
           {/* <span className="a-la-button loading-child">{text()}</span> */}
           {this.content()}
@@ -28,7 +31,7 @@ class LoadingPage extends Component {
   content = () => {
     if (this.state.loading) {
       return (
-        <div class="lds-roller loading-child">
+        <div className="lds-roller loading-child">
           <div></div>
           <div></div>
           <div></div>
@@ -43,7 +46,7 @@ class LoadingPage extends Component {
     else {
       return (
         <div className="loading-child">
-            <Link className="button-link" to="/activelearning">next</Link>
+            <Link className="button-link" to={"/" + this.props.nextPage}>next</Link>
         </div>
       );
     }

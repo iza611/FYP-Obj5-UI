@@ -16,7 +16,8 @@ import ActiveLearningPage from './pages/active-learning';
 class App extends Component {
   state = { 
     serverMessage: "",
-    serverMessage2: ""
+    serverMessage2: "",
+    nextPgAfterLoading: 'activelearning'
    } 
   render() { 
     return (
@@ -42,7 +43,7 @@ class App extends Component {
               <Route path="/new" element={<NewDatasetPage />} />
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/loading" element={<LoadingPage />} />
+              <Route path="/loading" element={<LoadingPage nextPage={this.state.nextPgAfterLoading} changeNextPg={this.changePg}/>} />
               <Route path="/activelearning" element={<ActiveLearningPage />} />
               <Route path="/results" element={<Results />} />
             </Routes>
@@ -54,6 +55,10 @@ class App extends Component {
       
       </HashRouter>
     );
+  }
+
+  changePg = () => {
+    this.setState({nextPgAfterLoading: 'results'});
   }
 
   handleClick = () => {
