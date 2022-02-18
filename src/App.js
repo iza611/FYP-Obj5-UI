@@ -10,6 +10,8 @@ import LoadingPage from './pages/loading';
 import Results from './pages/results';
 import React, { Component } from 'react';
 import LicenseText from './pages/photo-license';
+import Dropzone from 'react-dropzone';
+import ActiveLearningPage from './pages/active-learning';
 
 class App extends Component {
   state = { 
@@ -24,7 +26,7 @@ class App extends Component {
 
           <NavBar />
 
-          <div>
+          {/* <div>
             <button onClick={this.handleClick}>run node script</button>
             <span className='text-light'>{this.state.serverMessage}</span>
             <button onClick={this.handleClick2}>run node script2</button>
@@ -32,7 +34,7 @@ class App extends Component {
             <button onClick={this.handleClick3}>post msg</button>
             <button onClick={this.handleClick4}>run python script</button>
             <button onClick={this.handleClick5}>get node module dir</button>
-          </div>
+          </div> */}
 
           <div className="content">
             <Routes>
@@ -41,6 +43,7 @@ class App extends Component {
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/loading" element={<LoadingPage />} />
+              <Route path="/activelearning" element={<ActiveLearningPage />} />
               <Route path="/results" element={<Results />} />
             </Routes>
           </div>

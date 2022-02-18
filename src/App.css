@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  height: 100vh;
+  height: 772px;
   background: linear-gradient(
     200.96deg,
     /* #fedc2a -29.09%,
@@ -12,43 +12,8 @@
     #008d97,
     #008f7a
   );
-  background-image: url("./animals/forest1 copy.jpg");
+  background-image: url("./animals/forest2 copy.jpg");
   background-size: cover;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .navigation {
@@ -83,15 +48,17 @@
 }
 
 .content {
+  height: 640px;
   margin-left: 160px;
   margin-right: 160px;
   margin-top: 20px;
   padding-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .button-div {
   padding: 15px;
+  margin-top: 10px;
 }
 
 .button-link {
@@ -107,9 +74,10 @@
 .button-link:hover {
   background-color: rgb(180, 180, 180);
   color: black;
+  border: 1px darkgoldenrod solid;
 }
 
-.button {
+/* .button {
   text-decoration: none;
   color: white;
   background-color: #28242c;
@@ -125,13 +93,90 @@
 .button:hover {
   background-color: rgb(180, 180, 180);
   color: black;
+} */
+
+.a-la-button {
+  text-decoration: none;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 4px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .license-text {
-  position: absolute;
+  /* position: absolute; */
   /* margin-top: 10px; */
-  bottom: 2px;
-  left: 0;
-  right: 0;
+  /* bottom: 2px; */
+  /* left: 0;
+  right: 0; */
+  margin-top: 27px;
   font-size: 10px;
+}
+
+.dropzone {
+  border-radius: 5px;
+  background-color: #28242c;
+  color: white;
+  padding: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+  border-color: darkgoldenrod;
+  border: 1px darkgoldenrod solid;
+}
+
+.dropzone-input {
+  margin-top: 12px;
+}
+
+.dropzone:hover {
+  cursor: auto;
+}
+
+.dropzone-filled {
+  border-radius: 5px;
+  background-color: darkgoldenrod;
+  color: white;
+  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: small;
+  border: 1px #28242c solid;
+}
+
+.dropzone-filled:hover {
+  cursor: auto;
+}
+
+.species {
+  text-decoration: none;
+  color: white;
+  background-color: #28242c;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin: 2px;
+  /* width: fit-content; */
+}
+
+.species:hover {
+  background-color: rgb(180, 180, 180);
+  color: black;
+  border: 1px darkgoldenrod solid;
+}
+
+.species-input {
+  text-decoration: none;
+  color: black;
+  background-color: rgb(180, 180, 180);
+  border: 1px darkgoldenrod solid;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin: 2px;
 }

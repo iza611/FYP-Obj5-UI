@@ -4,7 +4,8 @@ function NavBar() {
   return (
     <nav className="navbar navbar-dark bg-dark navbar-fixed-top">
     <div>
-      <a href={"#"} className="navigation disabled">&#8249;</a>
+      <span className='text-dark demo'>Demo</span>
+      {/* <a href={"#"} className="navigation disabled">&#8249;</a> */}
       {/* <a href={"#"} className="navigation disabled">&#8250;</a> */}
     </div>
     <div>

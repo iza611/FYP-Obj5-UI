@@ -1,72 +1,87 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import DropzoneComponent from './dropzone';
+import SpeciesAdding from "./species-adding";
 
 class NewDatasetPage extends Component  {
   state = {
     imgDir: "",
-    lblDir: ""
+    lblDir: "",
+    species: [],
+    speciesError: ""
   }
 
   render() { 
     return (
       <>
-        <div>
-        load new dataset
+        <div style={{paddingTop:"10px"}}>
+          <div className="a-la-button">Load a new dataset and start labelling. After labelling 30% images ELA will learn how to regognise animals and label the remaining images for you! You can then check the results, further improve the accuracy, download labelled images or save the model for future labelling.</div>
         </div>
+        <div style={{border:"1px black solid", marginTop:"10px"}}></div>
+
+        <p></p>
+        <div className="a-la-button">Please upload a <span style={{textDecoration: "underline"}}>folder</span> with images to be labelled:</div>
+        <p></p>
+        <DropzoneComponent acceptedType={ "FOLDER" } setDir={(dir) => this.setFolderDir(dir)} />
+        {/* <span>{ this.state.imgDir }</span> */}
+        <p></p>
+        <div className="a-la-button">Please upload a <span style={{textDecoration: "underline"}}>file</span> with labels for testing and evaluating model: (this will be optional in a non-demo verisons)</div>
+        <p></p>
+        <DropzoneComponent acceptedType={ "FILE" } setDir={(dir) => this.setFileDir(dir)}/>
+        {/* <span>{ this.state.lblDir }</span> */}
+        <p></p>
+        <div className="a-la-button">Specify what species are in the database:</div>
+        <p></p>
+        <SpeciesAdding species={this.state.species} 
+                       speciesError={this.state.speciesError} 
+                       onFormSubmit={this.addNewSpecie} 
+                       onLabelClicked={(s) => this.removeSpecie(s)} />
 
         <div className="button-div">
-          <form onSubmit={this.handleSubmitImg}>
-          {/* <form> */}
-            <label>
-              Images directory: {" "}
-              <input type="text" onChange={this.handleChangeImg}/>
-            </label>
-            <input className="button" type="submit" value="Submit" />
-          </form>
-         </div>
-
-         <p>{this.state.imgDir}</p>
-
-         <div className="button-div">
-          <form onSubmit={this.handleSubmitLbl}>
-          {/* <form> */}
-            <label>
-              Labels directory: {" "}
-              <input type="text" onChange={this.handleChangeLbl}/>
-            </label>
-            <input className="button" type="submit" value="Submit" />
-          </form>
-         </div>
-
-         <p>{this.state.lblDir}</p>
-
-        <div className="button-div">
-          <Link className="button-link" to="/loading">next</Link>
+          <Link onClick={this.handleClick} className={this.activateWhenFilled()} to="/loading">next</Link>
         </div>
       </>
     );
   }
 
-  handleChangeImg = (event) => {
-    const whatisthis = event.target.value
-    console.log(whatisthis)
-    this.setState({imgDir:whatisthis})
+  setFolderDir = (dir) => {
+    this.setState({imgDir:dir})
   }
 
-  handleSubmitImg = (event) => {
-    console.log(this.state.imgDir)
-    console.log("submitted directory, sent to node?")
+  setFileDir = (dir) => {
+    this.setState({lblDir:dir})
   }
 
-  handleChangeLbl = (event) => {
-    const whatisthis = event.target.value
-    console.log(whatisthis)
-    this.setState({lblDir:whatisthis})
+  addNewSpecie = (event) => {
+    const newSpecie = event.target[0].value;
+    let speciesCopy = this.state.species.map((specie) => specie);
+    if (speciesCopy.includes(newSpecie)) {
+        this.setState({speciesError:"\"" + newSpecie + "\" is already added to the list"});
+    }
+    else{
+        this.setState({speciesError:""})
+        speciesCopy.push(newSpecie);
+        this.setState({species: speciesCopy});
+        const form = document.getElementById("species-form");
+        form.reset();
+    }
   }
 
-  handleSubmitLbl = (event) => {
-    console.log(this.state.lblDir)
-    console.log("submitted directory, sent to node?")
+  removeSpecie = (s) => {
+      this.setState({species: this.state.species.filter((specie) => specie !== s)})
+  }
+
+  activateWhenFilled = () => {
+    if(this.state.imgDir !== "" && this.state.lblDir !== "" && this.state.species.length !== 0){
+      return "button-link"
+    }
+    else {
+      return "button-link disabled"
+    }
+  }
+
+  handleClick() {
+    // contact with server
   }
 
 }

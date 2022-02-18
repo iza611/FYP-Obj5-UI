@@ -9,10 +9,10 @@ function FrontPage() {
           <img className="img" width="400px" alt="icon" src={fox} />
           {/* <h1 className="text-light txt">Easy Labelling Assistant</h1> */}
           <div className="button-div">
-                <Link className="button-link" to="/new">Load new dataset</Link>
+                <Link className="button-link" to="/new">Train new model</Link>
           </div>
           <div className="button-div">
-                <Link className="button-link" to="/existing">Open existing project</Link>
+                <Link className="button-link" to="/existing">Use existing model</Link>
           </div>
           <div className="button-div">
                 <Link className="button-link" to="/about">About</Link>
