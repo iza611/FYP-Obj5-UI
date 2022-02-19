@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DropzoneComponent from './dropzone';
@@ -38,7 +39,7 @@ class NewDatasetPage extends Component  {
                        onLabelClicked={(s) => this.removeSpecie(s)} />
 
         <div className="button-div">
-          <Link onClick={this.handleClick} className={this.activateWhenFilled()} to="/loading">next</Link>
+          <Link params={{nextPageTest: "activelearning"}} className={this.activateWhenFilled()} to={{pathname:"/loading/activelearning",search:"?test", state:{nextPageTest: "activelearning"}}}>next</Link>
         </div>
       </>
     );
@@ -80,9 +81,41 @@ class NewDatasetPage extends Component  {
     }
   }
 
-  handleClick() {
-    // contact with server
-  }
+  // handleClick = () => {
+  //   // contact with server 
+  //   const bodyText = this.stateToJson();
+  //   console.log(bodyText);
+
+  //   fetch('http://localhost:8000/start-training', {
+  //     method: 'POST',
+  //     body: bodyText
+  //   })
+  //   .then(res => res.json())
+  //   .then((data) => {
+  //     console.log('Success', data);
+  //   })
+  //   .catch((error) => {
+  //     this.setState({ serverMessage2: error});
+  //   });
+  // }
+
+  // stateToJson = () => {
+  //   const imgDirJson = "\"" + this.state.imgDir + "\"";
+  //   const lblDirJson = "\"" + this.state.lblDir + "\"";
+  //   const species = this.state.species;
+
+  //   let speciesJson = species.map((specie) => "\"" + specie + "\"");
+  //   speciesJson.slice(0, speciesJson.length); // remove last comma
+  //   speciesJson = "[" + speciesJson + "]";
+
+  //   const json = "{" + 
+  //   "\"imagesDirectory\":" + imgDirJson + "," +
+  //   "\"labelsDirectory\":" + lblDirJson + "," +
+  //   "\"species\":" + speciesJson +
+  //   "}";
+
+  //   return json;
+  // }
 
 }
 

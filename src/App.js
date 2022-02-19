@@ -11,12 +11,14 @@ import Results from './pages/results';
 import React, { Component } from 'react';
 import LicenseText from './pages/photo-license';
 import ActiveLearningPage from './pages/active-learning';
+import LoadingWrapper from './pages/loading-wrapper';
 
 class App extends Component {
   state = { 
     serverMessage: "",
     serverMessage2: "",
-    nextPgAfterLoading: 'activelearning'
+    nextPgAfterLoading: 'activelearning',
+    queryIds: []
    } 
   render() { 
     return (
@@ -42,7 +44,7 @@ class App extends Component {
               <Route path="/new" element={<NewDatasetPage />} />
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/loading" element={<LoadingPage nextPage={this.state.nextPgAfterLoading} changeNextPg={this.changePg}/>} />
+              <Route path="/loading/:page" element={<LoadingWrapper changeQueryIds={(ids) => this.changeQueryIds(ids)}/>} />
               <Route path="/activelearning" element={<ActiveLearningPage />} />
               <Route path="/results" element={<Results />} />
             </Routes>
@@ -56,8 +58,12 @@ class App extends Component {
     );
   }
 
-  changePg = () => {
-    this.setState({nextPgAfterLoading: 'results'});
+  changePg = (page) => {
+    this.setState({nextPgAfterLoading: page});
+  }
+
+  changeQueryIds = (ids) => {
+    this.setState({queryIds: ids});
   }
 
   handleClick = () => {

@@ -89,7 +89,7 @@ class ActiveLearningPage extends Component {
     renderSubmitButton = () => {
         if(this.state.currentQuery === this.state.noQueries) {
             return (
-                <Link className="button-link" to="/loading">SUBMIT ALL</Link>
+                <Link className="button-link" to="/loading/results">SUBMIT ALL</Link>
             )
         }
         else {
