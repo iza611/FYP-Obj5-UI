@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import wip from "./../animals/work-in-progress.png"
 
 class ExistingProjectPage extends Component  {
   state = {
@@ -28,8 +29,14 @@ class ExistingProjectPage extends Component  {
          <p>{this.state.imgDir}</p>
 
         <div className="button-div">
-          <Link className="button-link" to="/loading">next</Link>
+          <Link className="button-link disabled" to="/loading">next</Link>
         </div>
+
+        <img width={"200px"} src={wip} alt="wip"/>
+        <div>
+        <a href="https://www.flaticon.com/free-icons/work-in-progress" title="work in progress icons">Work in progress icons created by Freepik - Flaticon</a>
+        </div>
+        
       </>
     );
   }

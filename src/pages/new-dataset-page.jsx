@@ -7,7 +7,7 @@ class NewDatasetPage extends Component  {
   state = {
     imgDir: "",
     lblDir: "",
-    species: [],
+    species: ["dog", "cat"],
     speciesError: ""
   }
 
@@ -15,7 +15,7 @@ class NewDatasetPage extends Component  {
     return (
       <>
         <div style={{paddingTop:"10px"}}>
-          <div className="a-la-button">Load a new dataset and start labelling. After labelling 30% images ELA will learn how to regognise animals and label the remaining images for you! You can then check the results, further improve the accuracy, download labelled images or save the model for future labelling.</div>
+          <div className="a-la-button-dark">Load a new dataset and start labelling. After labelling 30% images ELA will learn how to regognise animals and label the remaining images for you! You can then check the results, further improve the accuracy, download labelled images or save the model for future labelling.</div>
         </div>
         <div style={{border:"1px black solid", marginTop:"10px"}}></div>
 

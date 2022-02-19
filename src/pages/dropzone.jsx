@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Dropzone from 'react-dropzone';
+import "./../animations/dragNdrop.css"
 
 class DropzoneComponent extends Component {
     state = { 
@@ -46,7 +47,10 @@ class DropzoneComponent extends Component {
             return (
                 isDragActive ? 
                 <p className="dropzone-input">drop the {this.props.acceptedType} here ...</p> :
-                <p className="dropzone-input">drag and drop the {this.props.acceptedType} here</p>
+                <div>
+                    <i className="gg-software-download drop"></i>
+                    <p className="dropzone-input">drag and drop the {this.props.acceptedType} here</p>
+                </div>
             );
         }
         else {

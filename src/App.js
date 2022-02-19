@@ -10,7 +10,6 @@ import LoadingPage from './pages/loading';
 import Results from './pages/results';
 import React, { Component } from 'react';
 import LicenseText from './pages/photo-license';
-import Dropzone from 'react-dropzone';
 import ActiveLearningPage from './pages/active-learning';
 
 class App extends Component {
