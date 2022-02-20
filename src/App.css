@@ -93,6 +93,20 @@
   border: 1px darkgoldenrod solid;
 }
 
+.button-link-disabled {
+  text-decoration: none;
+  color: white;
+  background-color: #28242c;
+  padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+  border: 1px #28242c solid;
+  opacity: 0.4;
+  /* cursor: default; */
+  /* ^ doesnt work, had to do inline */
+}
+
 .a-la-button {
   text-decoration: none;
   color: black;
@@ -177,6 +191,7 @@
   background-color: rgb(180, 180, 180);
   color: black;
   border: 1px darkgoldenrod solid;
+  cursor: pointer;
 }
 
 .species-input {
@@ -199,6 +214,10 @@
   margin: 2px;
 }
 
+.species-not-clicked:hover {
+  cursor: default;
+}
+
 .species-clicked {
   color: white;
   background-color: #28242c;
@@ -206,6 +225,10 @@
   padding: 5px;
   border-radius: 5px;
   margin: 2px;
+}
+
+.species-clicked:hover {
+  cursor: default;
 }
 
 .gg-check-o {

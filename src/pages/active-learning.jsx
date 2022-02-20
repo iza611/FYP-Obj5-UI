@@ -32,7 +32,7 @@ class ActiveLearningPage extends Component {
 
                 <div className='section2'>
                     <div>
-                        <img height="300px" alt="icon" src={this.getImage()} style={{marginTop:"10px", border:"3px black solid"}}/>
+                        <img height={"auto"} width={"auto"} alt="icon" src={this.getImage()} style={{marginTop:"10px", border:"3px black solid", maxHeight:"330px", maxWidth:"570px"}}/>
                     </div>
 
                     <div style={{marginTop:"20px"}}>
@@ -61,8 +61,10 @@ class ActiveLearningPage extends Component {
         fetch('http://localhost:8000/query-ids/0')
         .then(res => res.text())
         .then((data) => {
-            let dataConverted = data.slice(1, data.length-1)
-            dataConverted = dataConverted.split(",")
+            // console.log(data);
+            let dataConverted = data.slice(2, data.length-2)
+            dataConverted = dataConverted.split("\",\"")
+            // console.log(dataConverted);
             this.setState({queryIds: dataConverted});
             let dataSize = dataConverted.length;
             this.setState({noQueries: dataSize});
@@ -75,6 +77,8 @@ class ActiveLearningPage extends Component {
         .then(res => res.json())
         .then((data) => {
             let dataConverted = data.map((s)=>[0,s]);
+            dataConverted.push([0, 'other / undefind']);
+            console.log(dataConverted);
             this.setState({species: dataConverted});
         })
         .catch((error) => {
@@ -125,16 +129,57 @@ class ActiveLearningPage extends Component {
     }
 
     renderSubmitButton = () => {
-        if(this.state.currentQuery === this.state.noQueries) {
-            return (
-                <Link onClick={this.sendLabels} className="button-link" to="/loading/results/null/null/null">submit</Link>
-            )
+        const isLast = this.state.currentQuery === this.state.noQueries;
+
+        if(this.state.species === undefined){
+            // species not yet fetched 
+            const button = isLast? 
+                    <button className="button-link-disabled"
+                    style={{cursor:"default"}}>
+                        submit
+                    </button>
+                    :
+                    <button className='button-link-disabled'
+                    style={{cursor:"default"}}>
+                        submit {"&"} go to the next image {">"}
+                    </button>;
+                return button;
         }
         else {
-            return (
-                <button onClick={this.nextClicked} className='button-link'>submit {"&"} go to the next image {">"}</button>
-            );
-        };
+            //fetched
+            let selected = this.state.species.find(s => s[0] === 1);
+            if(selected === undefined){
+                // not selected yet
+                const button = isLast? 
+                    <button className="button-link-disabled"
+                    style={{cursor:"default"}}>
+                        submit
+                    </button>
+                    :
+                    <button className='button-link-disabled'
+                    style={{cursor:"default"}}>
+                        submit {"&"} go to the next image {">"}
+                    </button>;
+                return button;
+            }
+            else {
+                // selected
+                selected = selected[1];
+
+                const button = isLast? 
+                    <Link onClick={() => this.sendLabel(selected)} 
+                    className="button-link" 
+                    to="/loading/results/null/null/null">
+                        submit
+                    </Link>
+                    :
+                    <button onClick={() => this.nextClicked(selected)} 
+                    className='button-link'>
+                        submit {"&"} go to the next image {">"}
+                    </button>;
+                return button;
+            }
+        }
     }
 
     isClicked = (s) => {
@@ -147,38 +192,33 @@ class ActiveLearningPage extends Component {
     }
 
     select = (s) => {
-        this.setState({species: this.state.species.map((specie) => {
-            if(specie === s){
-
-                 if(specie[0] === 0) {
-                    return [1, specie[1]]
-                 }
-                 if(specie[0] === 1) {
-                    return [0, specie[1]]
-                 }
+        let speciesCleared = this.state.species.map((sp)=>[0,sp]);
+        let selectedOne = speciesCleared.map((spe) => {
+            if(spe[1]===s) {
+                return [1, spe[1][1]]
+                
             }
             else {
-                return specie
-            };
-            return [0, "error"];
-        })})
+                return [0, spe[1][1]];
+            }
+        });
+        this.setState({species: selectedOne});
     }
 
-    nextClicked = () => {  
-        this.sendLabels()
-        this.clearSpeciesArray()
+    nextClicked = (selected) => {  
+        this.sendLabel(selected);
+        this.clearSpeciesArray();
 
-        this.changeCurrentQuery()
+        this.changeCurrentQuery();
 
-        this.checkAsLabelled()
+        this.checkAsLabelled();
     }
 
-    sendLabels = () => {
-        const bodyContent = this.state.species;
-        console.log(bodyContent);
-        fetch('http://localhost:8000/labelled-species/0', {
+    sendLabel = (label) => {
+        console.log(label);
+        fetch('http://localhost:8000/label/0', {
             method: 'POST',
-            body: bodyContent
+            body: label
         })
         .then(res => res.text())
         .then((data) => {

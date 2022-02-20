@@ -22,21 +22,34 @@ class LoadingPage extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props.params);
-    const bodyText = this.stateToJson();
+    // console.log(this.props.params);
+    if(this.props.params.page === 'activelearning') {
+      const bodyText = this.stateToJson();
+      fetch('http://localhost:8000/start-training', {
+        method: 'POST',
+        body: bodyText
+      })
+      .then(res => res.text())
+      .then((data) => {
+        console.log('Success', data);
+        this.setState({loading:false});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
 
-    fetch('http://localhost:8000/start-training', {
-      method: 'POST',
-      body: bodyText
-    })
-    .then(res => res.text())
-    .then((data) => {
-      console.log('Success', data);
-      this.setState({loading:false});
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    if(this.props.params.page === 'results') {
+      fetch('http://localhost:8000/finish-training')
+      .then(res => res.text())
+      .then((data) => {
+        console.log('Success', data);
+        this.setState({loading:false});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   }
 
   stateToJson = () => {

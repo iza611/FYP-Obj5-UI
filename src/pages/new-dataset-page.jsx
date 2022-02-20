@@ -61,6 +61,7 @@ class NewDatasetPage extends Component  {
   }
 
   addNewSpecie = (event) => {
+    event.preventDefault();
     const newSpecie = event.target[0].value;
     let speciesCopy = this.state.species.map((specie) => specie);
     if (speciesCopy.includes(newSpecie)) {

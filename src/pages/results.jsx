@@ -126,6 +126,17 @@ class Results extends Component {
     </>
     );
   }
+
+  componentDidMount() {
+    fetch('http://localhost:8000/testlbl')
+        .then(res => res.text())
+        .then((data) => {
+            console.log(data);
+         })
+         .catch((error) => {
+             console.log(error);
+            });
+  }
 }
  
 export default Results;
