@@ -6,12 +6,12 @@ import SpeciesAdding from "./species-adding";
 
 class NewDatasetPage extends Component  {
   state = {
-    imgDir: "",
-    lblDir: "",
+    imgDir: "k",
+    lblDir: "k",
     species: ["dog", "cat"],
     speciesError: ""
   }
-
+  
   render() { 
     return (
       <>
@@ -39,18 +39,25 @@ class NewDatasetPage extends Component  {
                        onLabelClicked={(s) => this.removeSpecie(s)} />
 
         <div className="button-div">
-          <Link params={{nextPageTest: "activelearning"}} className={this.activateWhenFilled()} to={{pathname:"/loading/activelearning",search:"?test", state:{nextPageTest: "activelearning"}}}>next</Link>
+          <Link className={this.activateWhenFilled()} 
+          to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${this.state.species}`}>
+            next
+          </Link>
         </div>
       </>
     );
   }
 
   setFolderDir = (dir) => {
-    this.setState({imgDir:dir})
+    const dirConverted = dir.replace(/\//g, "QcJkC").replace(/ /g, "HK3JE");
+    console.log(dirConverted);
+    this.setState({imgDir:dirConverted})
   }
 
   setFileDir = (dir) => {
-    this.setState({lblDir:dir})
+    const dirConverted = dir.replace(/\//g, "QcJkC").replace(/ /g, "HK3JE");
+    console.log(dirConverted);
+    this.setState({lblDir:dirConverted})
   }
 
   addNewSpecie = (event) => {

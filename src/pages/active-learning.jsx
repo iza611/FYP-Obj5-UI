@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import img1 from "../animals/ena24/6198.jpg";
-import img2 from "../animals/ena24/6283.jpg";
-import img3 from "../animals/ena24/7004.jpg";
-import img4 from "../animals/ena24/8150.jpg";
-import img5 from "../animals/ena24/8869.jpg";
-import img6 from "../animals/ena24/9229.jpg";
+// import img1 from "../animals/ena24/6198.jpg";
+// import img2 from "../animals/ena24/6283.jpg";
+// import img3 from "../animals/ena24/7004.jpg";
+// import img4 from "../animals/ena24/8150.jpg";
+// import img5 from "../animals/ena24/8869.jpg";
+// import img6 from "../animals/ena24/9229.jpg";
 
 class ActiveLearningPage extends Component {
     state = { 
-        noQueries: 6,
+        noQueries: 1,
         currentQuery: 1,
-        species: [[0, "dog"], [0, "cat"]],
-        imgsMock: [img1, img2, img3, img4, img5, img6],
-        currentImgMock: img1
      } 
 
     render() { 
@@ -35,21 +32,21 @@ class ActiveLearningPage extends Component {
 
                 <div className='section2'>
                     <div>
-                        <img height="300px" alt="icon" src={this.state.currentImgMock} style={{marginTop:"10px", border:"3px black solid"}}/>
+                        <img height="300px" alt="icon" src={this.getImage()} style={{marginTop:"10px", border:"3px black solid"}}/>
                     </div>
 
-                    <div style={{marginTop:"10px"}}>
+                    <div style={{marginTop:"20px"}}>
                         <span className='a-la-button'>
                             identify specie/s on the image above:
                         </span>
                     </div>
 
-                    <div style={{margin:"10px"}}>
+                    <div style={{margin:"20px"}}>
                         {this.renderSpecies()}
                     </div>
                 </div>
 
-                <div style={{border:"1px black solid", marginTop:"10px"}}></div>
+                {/* <div style={{border:"1px black solid", marginTop:"10px"}}></div> */}
 
                 <div className='section3'>
                     <div style={{margin:"10px"}}>
@@ -60,11 +57,45 @@ class ActiveLearningPage extends Component {
         );
     }
 
+    componentDidMount = () => {
+        fetch('http://localhost:8000/query-ids/0')
+        .then(res => res.text())
+        .then((data) => {
+            let dataConverted = data.slice(1, data.length-1)
+            dataConverted = dataConverted.split(",")
+            this.setState({queryIds: dataConverted});
+            let dataSize = dataConverted.length;
+            this.setState({noQueries: dataSize});
+         })
+         .catch((error) => {
+             console.log(error);
+            });
+
+        fetch('http://localhost:8000/species')
+        .then(res => res.json())
+        .then((data) => {
+            let dataConverted = data.map((s)=>[0,s]);
+            this.setState({species: dataConverted});
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        
+    }
+
+    getImage = () => {
+        if(this.state.queryIds !== undefined) {
+            return (
+                "http://localhost:8000/" + 
+                this.state.queryIds[(this.state.currentQuery-1)] + 
+                ".jpg");
+        }
+    }
+
     renderChecks = () => {
         const seq = Array(this.state.noQueries).fill().map((element, index) => index + 1);
         return (
             seq.map((idx) => {
-                console.log(idx);
                 if(idx<this.state.currentQuery) {
                     return <i className="gg-check-o" key={idx}></i>;
                 }
@@ -76,20 +107,27 @@ class ActiveLearningPage extends Component {
     }
 
     renderSpecies = () => {
-        return(
-            this.state.species.map((s) => 
-            <span className={this.isClicked(s)} 
-                  onClick={() => this.select(s)} 
-                  key={Math.random()}>
-            {s[1]+" "}
-            </span>)
-        );
+        if(this.state.species !== undefined) {
+            return(
+                this.state.species.map((s) => {
+                    // console.log(s)
+                    return (
+                        <span className={this.isClicked(s)} 
+                              onClick={() => this.select(s)} 
+                              key={Math.random()}>
+                        {s[1]+" "}
+                        </span>
+                    );
+                })
+            );
+        }
+        
     }
 
     renderSubmitButton = () => {
         if(this.state.currentQuery === this.state.noQueries) {
             return (
-                <Link className="button-link" to="/loading/results">SUBMIT ALL</Link>
+                <Link onClick={this.sendLabels} className="button-link" to="/loading/results/null/null/null">submit</Link>
             )
         }
         else {
@@ -101,7 +139,7 @@ class ActiveLearningPage extends Component {
 
     isClicked = (s) => {
         if(s[0] === 0){
-            return 'species'
+            return 'species-not-clicked'
         }
         if(s[0] === 1){
             return "species-clicked"
@@ -121,7 +159,8 @@ class ActiveLearningPage extends Component {
             }
             else {
                 return specie
-            }
+            };
+            return [0, "error"];
         })})
     }
 
@@ -130,13 +169,24 @@ class ActiveLearningPage extends Component {
         this.clearSpeciesArray()
 
         this.changeCurrentQuery()
-        this.requestNextImg()
 
         this.checkAsLabelled()
     }
 
     sendLabels = () => {
-        // send to server in future
+        const bodyContent = this.state.species;
+        console.log(bodyContent);
+        fetch('http://localhost:8000/labelled-species/0', {
+            method: 'POST',
+            body: bodyContent
+        })
+        .then(res => res.text())
+        .then((data) => {
+            console.log('Success', data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     clearSpeciesArray = () => {
@@ -145,11 +195,6 @@ class ActiveLearningPage extends Component {
 
     changeCurrentQuery = () => {
         this.setState({currentQuery: this.state.currentQuery+1});
-    }
-
-    requestNextImg = () => {
-        // request from server in future
-        this.setState({currentImgMock: this.state.imgsMock[this.state.currentQuery]});
     }
 
     checkAsLabelled = () => {

@@ -5,9 +5,9 @@ import './../animations/loading.css';
 class LoadingPage extends Component {
   state = { 
     loading: true,
-    imgDir: "",
-    lblDir: "",
-    species: ["dog", "cat"]
+    imgDir: this.props.params.imgDir.replace(/QcJkC/g, "/").replace(/HK3JE/g, " "),
+    lblDir: this.props.params.lblDir.replace(/QcJkC/g, "/").replace(/HK3JE/g, " "),
+    species: this.props.params.species.split(",")
    } 
 
   render() { 
@@ -22,6 +22,7 @@ class LoadingPage extends Component {
   }
 
   componentDidMount = () => {
+    console.log(this.props.params);
     const bodyText = this.stateToJson();
 
     fetch('http://localhost:8000/start-training', {
@@ -73,7 +74,7 @@ class LoadingPage extends Component {
     }
     else {
       return (
-        <Navigate to={"/" + this.props.nextPage.page} />
+        <Navigate to={"/" + this.props.params.page} />
       );
     };
   }

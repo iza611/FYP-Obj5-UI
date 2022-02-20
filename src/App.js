@@ -6,7 +6,6 @@ import AboutPage from './pages/about';
 import NavBar from './pages/navabar';
 import NewDatasetPage from './pages/new-dataset-page'
 import ExistingProjectPage from './pages/existing-project-page';
-import LoadingPage from './pages/loading';
 import Results from './pages/results';
 import React, { Component } from 'react';
 import LicenseText from './pages/photo-license';
@@ -16,9 +15,7 @@ import LoadingWrapper from './pages/loading-wrapper';
 class App extends Component {
   state = { 
     serverMessage: "",
-    serverMessage2: "",
-    nextPgAfterLoading: 'activelearning',
-    queryIds: []
+    serverMessage2: ""
    } 
   render() { 
     return (
@@ -44,7 +41,7 @@ class App extends Component {
               <Route path="/new" element={<NewDatasetPage />} />
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/loading/:page" element={<LoadingWrapper changeQueryIds={(ids) => this.changeQueryIds(ids)}/>} />
+              <Route path="/loading/:page/:imgDir/:lblDir/:species" element={<LoadingWrapper />} />
               <Route path="/activelearning" element={<ActiveLearningPage />} />
               <Route path="/results" element={<Results />} />
             </Routes>

@@ -46,7 +46,7 @@ class DropzoneComponent extends Component {
         if(this.state.fileDir === ""){
             return (
                 isDragActive ? 
-                <p className="dropzone-input">drop the {this.props.acceptedType} here ...</p> :
+                <p className="dropzone-input dropping">drop the {this.props.acceptedType} here ...</p> :
                 <div>
                     <i className="gg-software-download drop"></i>
                     <p className="dropzone-input">drag and drop the {this.props.acceptedType} here</p>
@@ -56,7 +56,7 @@ class DropzoneComponent extends Component {
         else {
             return ( 
                 isDragActive ? 
-                <p className="dropzone-input">drop the {this.props.acceptedType} here ...</p> :
+                <p className="dropzone-input dropping">drop the {this.props.acceptedType} here ...</p> :
                 <p className="dropzone-input">{this.state.fileDir}</p>
                 );
         }
