@@ -1,5 +1,5 @@
+const fs = require('fs');
 function tryUsingFs() {
-    const fs = require('fs');
     const path = '/Users/ozogiz01/OneDrive - StepStone Group/Desktop/Metadata (non-human images only).json';
     result = fs.existsSync(path);
     console.log(result);
@@ -62,6 +62,7 @@ const EventEmitter = require('events');
 
 const { PythonShell } = require('python-shell');
 const isDev = require('electron-is-dev');
+const path = require('path');
 
 class PythonScript extends EventEmitter {
 
@@ -69,7 +70,8 @@ class PythonScript extends EventEmitter {
         let options = {
             mode: 'text',
             pythonOptions: ['-u'], // get print results in real-time
-            scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts'
+            // scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts'
+            scriptPath: isDev ? __dirname : __dirname + '/../scripts'
             // args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1]
         };
 
@@ -88,16 +90,17 @@ const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/expl
 class ActiveLearningStart extends EventEmitter {
 
     runPythonScript() {
-        console.log('hallllooo');
         let options = {
             mode: 'text',
             pythonOptions: ['-u'],
-            scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts',
+            // scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts',
+            scriptPath: isDev ? __dirname : __dirname + '/../scripts',
             args: [imgDirectory, lablDirectory]
         };
 
         PythonShell.run('start_active_training.py', options, (err, result) => {
             if (err) throw err;
+            console.log('results: %j', result);
             this.emit('started', result.toString());
         })
     }
@@ -160,6 +163,16 @@ function startExpressServer() {
 
     app.get('/module/dir', (req, res) => {
         res.send(__dirname);
+        // res.send(`file://${path.join(__dirname, '/../scripts')}`)
+        // const path = __dirname + '/../scripts';
+        // fs.readdir((path), (err, files) => {
+        //     let list = [];
+        //     files.forEach(file => {
+        //         list.push(file)
+        //     });
+        //     res.send(list);
+        // });
+
     })
 
     // MOCKING 

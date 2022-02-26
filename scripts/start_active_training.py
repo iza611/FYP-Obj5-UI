@@ -6,6 +6,7 @@ def data_prep():
     output_location = sys.argv[2]
     inputX, outputY = get_input_and_output(input_location, output_location)
     print(inputX)
+    sys.stdout.flush()
     print(outputY)
     sys.stdout.flush()
     

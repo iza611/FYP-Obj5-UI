@@ -4314,6 +4314,16 @@
   "resolved" "https://registry.npmjs.org/electron-is-dev/-/electron-is-dev-2.0.0.tgz"
   "version" "2.0.0"
 
+"electron-load-balancer@^3.0.0":
+  "integrity" "sha512-lAoH3MSmsaZBKLQN11FZOEXonuFV8ZICjf6eoUiGb59YWvDx5OVV/Z1W8gCMCL8756DLmvx92Kr+vKFWQj2dHw=="
+  "resolved" "https://registry.npmjs.org/electron-load-balancer/-/electron-load-balancer-3.0.0.tgz"
+  "version" "3.0.0"
+
+"electron-log@^4.4.6":
+  "integrity" "sha512-nirYgRdY+F+vclr8ijdwy2vW03IzFpDHTaKNWu76dEN21Y76+smcES5knS7cgHUUB0qNLOi8vZO36taakjbSXA=="
+  "resolved" "https://registry.npmjs.org/electron-log/-/electron-log-4.4.6.tgz"
+  "version" "4.4.6"
+
 "electron-osx-sign@^0.5.0":
   "integrity" "sha512-icoRLHzFz/qxzDh/N4Pi2z4yVHurlsCAYQvsCSG7fCedJ4UJXBS6PoQyGH71IfcqKupcKeK7HX/NkyfG+v6vlQ=="
   "resolved" "https://registry.npmjs.org/electron-osx-sign/-/electron-osx-sign-0.5.0.tgz"
@@ -4344,7 +4354,7 @@
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.71.tgz"
   "version" "1.4.71"
 
-"electron@^17.0.1":
+"electron@^17.0.1", "electron@^9.0.0":
   "integrity" "sha512-CBReR/QEOpgwMdt59lWCtj9wC8oHB6aAjMF1lhXcGew132xtp+C5N6EaXb/fmDceVYLouziYjbNcpeXsWrqdpA=="
   "resolved" "https://registry.npmjs.org/electron/-/electron-17.0.1.tgz"
   "version" "17.0.1"
@@ -9700,11 +9710,6 @@
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
-
-"typescript@^3.2.1 || ^4", "typescript@>= 2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
-  "integrity" "sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA=="
-  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.5.5.tgz"
-  "version" "4.5.5"
 
 "unbox-primitive@^1.0.1":
   "integrity" "sha512-tZU/3NqK3dA5gpE1KtyiJUrEB0lxnGkMFHptJ7q6ewdZ8s12QrODwNbhIJStmJkd1QDXa1NRA8aF2A1zk/Ypyw=="

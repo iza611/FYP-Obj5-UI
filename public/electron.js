@@ -12,7 +12,12 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 800,
-    resizable: false
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+    }
   });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   mainWindow.on('closed', () => mainWindow = null);
@@ -32,7 +37,8 @@ app.on('activate', () => {
   }
 });
 
-const testNodeModule = require('0-node-module-test');
+const testNodeModule = require(isDev ? './../server/index.js' : '../server/index.js');
+const { ipcMain } = require('electron');
 testNodeModule.tryUsingFs();
 
 // server
@@ -62,3 +68,17 @@ pythonScript.on('scriptCompleted', (results) => {
   console.log(results);
 });
 pythonScript.runPythonScript();
+
+
+/* ----------------------------------- Custom code starts here ------------------------------------- */
+ipcMain.on('testIpc', (event, args) => {
+  console.log('ipc works!');
+  console.log(event);
+  console.log(args);
+});
+
+
+
+/* server without node module */
+const testServer = require('./../server/test.js');
+testServer.startExpressServer();
