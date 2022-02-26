@@ -9,15 +9,15 @@ import ExistingProjectPage from './pages/existing-project-page';
 import Results from './pages/results';
 import React, { Component } from 'react';
 import LicenseText from './pages/photo-license';
-import ActiveLearningPage from './pages/active-learning';
+import ActiveLearningWrapper from './pages/active-learning-wrapper';
 import LoadingWrapper from './pages/loading-wrapper';
 
 class App extends Component {
-  state = { 
+  state = {
     serverMessage: "",
     serverMessage2: ""
-   } 
-  render() { 
+  }
+  render() {
     return (
       <HashRouter>
 
@@ -25,15 +25,16 @@ class App extends Component {
 
           <NavBar />
 
-          {/* <div>
-            <button onClick={this.handleClick}>run node script</button>
+          <div>
+            {/* <button onClick={this.handleClick}>run node script</button>
             <span className='text-light'>{this.state.serverMessage}</span>
             <button onClick={this.handleClick2}>run node script2</button>
             <span className='text-light'>{this.state.serverMessage2}</span>
-            <button onClick={this.handleClick3}>post msg</button>
+            <button onClick={this.handleClick3}>post msg</button> */}
             <button onClick={this.handleClick4}>run python script</button>
             <button onClick={this.handleClick5}>get node module dir</button>
-          </div> */}
+            <button onClick={this.handleClick6}>start active learning (py script)</button>
+          </div>
 
           <div className="content">
             <Routes>
@@ -41,26 +42,26 @@ class App extends Component {
               <Route path="/new" element={<NewDatasetPage />} />
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/loading/:page/:imgDir/:lblDir/:species" element={<LoadingWrapper />} />
-              <Route path="/activelearning" element={<ActiveLearningPage />} />
+              <Route path="/loading/:page/:imgDir/:lblDir/:species/:rounds/:queries/:round" element={<LoadingWrapper />} />
+              <Route path="/activelearning/:rounds/:queries/:round" element={<ActiveLearningWrapper />} />
               <Route path="/results" element={<Results />} />
             </Routes>
           </div>
 
-          <LicenseText/>
+          <LicenseText />
 
         </div>
-      
+
       </HashRouter>
     );
   }
 
   changePg = (page) => {
-    this.setState({nextPgAfterLoading: page});
+    this.setState({ nextPgAfterLoading: page });
   }
 
   changeQueryIds = (ids) => {
-    this.setState({queryIds: ids});
+    this.setState({ queryIds: ids });
   }
 
   handleClick = () => {
@@ -68,28 +69,28 @@ class App extends Component {
     // window.testNodeModule.hello();
 
     fetch('http://localhost:8000/message')
-    .then(res => res.json())
-    .then((data) => {
-      console.log(data);
-      const message = data[0]['message'];
-      console.log(message);
-      this.setState({ serverMessage: message });
-    })
-    .catch((error) => {
-      this.setState({ serverMessage: "error!!! probably something is blocking port 8000, kill it and restart ELA app!" });
-    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        const message = data[0]['message'];
+        console.log(message);
+        this.setState({ serverMessage: message });
+      })
+      .catch((error) => {
+        this.setState({ serverMessage: "error!!! probably something is blocking port 8000, kill it and restart ELA app!" });
+      })
   }
 
   handleClick2 = () => {
     fetch('http://localhost:8000/test')
-    .then(res => res.text())
-    .then((data) => {
-      console.log(data);
-      this.setState({ serverMessage2: data });
-    })
-    .catch((error) => {
-      this.setState({ serverMessage2: error});
-    });
+      .then(res => res.text())
+      .then((data) => {
+        console.log(data);
+        this.setState({ serverMessage2: data });
+      })
+      .catch((error) => {
+        this.setState({ serverMessage2: error });
+      });
   }
 
   handleClick3 = () => {
@@ -98,36 +99,50 @@ class App extends Component {
       method: 'PUT',
       body: imgDir
     })
-    .then(res => res.text())
-    .then((data) => {
-      console.log('Success', data);
-    })
-    .catch((error) => {
-      this.setState({ serverMessage2: error});
-    });
+      .then(res => res.text())
+      .then((data) => {
+        console.log('Success', data);
+      })
+      .catch((error) => {
+        this.setState({ serverMessage2: error });
+      });
   }
 
   handleClick4 = () => {
+    console.log('no kurła')
     fetch('http://localhost:8000/run/python/script')
-    .then(res => res.text())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then((data) => {
+        console.log(data);
+        console.log('no kurła');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleClick5 = () => {
     fetch('http://localhost:8000/module/dir')
-    .then(res => res.text())
-    .then((dir) => {
-      console.log(dir);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then(res => res.text())
+      .then((dir) => {
+        console.log(dir);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handleClick6 = () => {
+    console.log('wtf');
+    fetch('http://localhost:8000/start/active/learning')
+      .then(res => res.text())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
- 
+
 export default App;

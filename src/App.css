@@ -12,7 +12,7 @@
     #008d97,
     #008f7a
   );
-  background-image: url("./animals/forest2 copy.jpg");
+  /* background-image: url("./animals/forest2 copy.jpg"); */
   background-size: cover;
 }
 
@@ -103,8 +103,19 @@
   border-radius: 5px;
   border: 1px #28242c solid;
   opacity: 0.4;
-  /* cursor: default; */
-  /* ^ doesnt work, had to do inline */
+}
+
+.button-link-disabled:hover {
+  text-decoration: none;
+  color: white;
+  background-color: #28242c;
+  padding: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+  border: 1px #28242c solid;
+  opacity: 0.4;
+  cursor: default;
 }
 
 .a-la-button {
@@ -269,11 +280,39 @@
 }
 
 .section1 {
-  height: 80px;
+  height: 85px;
+  /* border: 1px red solid; */
 }
 
 .section2 {
   height: 480px;
+  position: relative;
+  /* border: 1px red solid; */
+}
+
+.section2-inside {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  display: inline-block;
+  /* border: 1px black solid; */
+}
+
+.section3 {
+  height: 85px;
+  position: relative;
+  border: 1px rgba(255, 255, 255, 0) solid;
+}
+
+.section3-inside {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 0;
+  right: 0;
+  /* border: 1px red solid; */
 }
 
 .result-link {
