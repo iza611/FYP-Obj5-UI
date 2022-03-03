@@ -12,6 +12,11 @@
 /build
 /dist
 
+# exe
+scripts/active_learning/dist
+scripts/active_learning/build
+scripts/active_learning/main.spec
+
 # misc
 .DS_Store
 .env.local

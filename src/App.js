@@ -40,6 +40,7 @@ class App extends Component {
             <button onClick={this.handleClick6}>start active learning (py script)</button>
             <button onClick={this.handleClick7}>test ipc</button>
             <button onClick={this.handleClick8}>test non-module server(from folder)</button>
+            <button onClick={this.handleClick9}>run exe file</button>
           </div>
 
           <div className="content">
@@ -158,6 +159,17 @@ class App extends Component {
 
   handleClick8 = () => {
     fetch('http://localhost:8001/test123')
+      .then(res => res.text())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        this.setState({ serverMessage2: error });
+      });
+  }
+
+  handleClick9 = () => {
+    fetch('http://localhost:8000/run/exe')
       .then(res => res.text())
       .then((data) => {
         console.log(data);

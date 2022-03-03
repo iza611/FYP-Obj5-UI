@@ -77,8 +77,3 @@ ipcMain.on('testIpc', (event, args) => {
   console.log(args);
 });
 
-
-
-/* server without node module */
-const testServer = require('./../server/test.js');
-testServer.startExpressServer();

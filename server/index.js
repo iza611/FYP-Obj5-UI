@@ -70,9 +70,7 @@ class PythonScript extends EventEmitter {
         let options = {
             mode: 'text',
             pythonOptions: ['-u'], // get print results in real-time
-            // scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts'
-            scriptPath: isDev ? __dirname : __dirname + '/../scripts'
-            // args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1]
+            scriptPath: isDev ? __dirname + '/../scripts' : __dirname + '/../scripts'
         };
 
         PythonShell.run('hello.py', options, (err, result) => {
@@ -84,24 +82,20 @@ class PythonScript extends EventEmitter {
 
 module.exports.PythonScript = PythonScript;
 
-const imgDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/ena24';
-const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json';
+class ActiveLearning extends EventEmitter {
 
-class ActiveLearningStart extends EventEmitter {
-
-    runPythonScript() {
+    runPythonScript(imgDirectory, lablDirectory, stage, noQueries, encoderDirectory) {
         let options = {
             mode: 'text',
             pythonOptions: ['-u'],
-            // scriptPath: isDev ? __dirname : __dirname + '/../../../../../../pythonscripts',
-            scriptPath: isDev ? __dirname : __dirname + '/../scripts',
-            args: [imgDirectory, lablDirectory]
+            scriptPath: isDev ? __dirname + '/../scripts/active_learning/' : __dirname + '/../scripts/active_learning/',
+            args: [imgDirectory, lablDirectory, stage, noQueries, encoderDirectory]
         };
 
-        PythonShell.run('start_active_training.py', options, (err, result) => {
+        PythonShell.run('main.py', options, (err, result) => {
             if (err) throw err;
-            console.log('results: %j', result);
-            this.emit('started', result.toString());
+            console.log('result: ', result);
+            this.emit('completed', result.toString());
         })
     }
 }
@@ -144,7 +138,6 @@ function startExpressServer() {
     });
 
     app.get('/run/python/script', (req, res) => {
-        console.log('halo');
         const pythonScript = new PythonScript();
         pythonScript.on('scriptCompleted', (results) => {
             res.send(results);
@@ -153,12 +146,17 @@ function startExpressServer() {
     });
 
     app.get('/start/active/learning', (req, res) => {
-        console.log('halo');
-        const script = new ActiveLearningStart();
-        script.on('started', (results) => {
+        const script = new ActiveLearning();
+        script.on('completed', (results) => {
             res.send(results);
         });
-        script.runPythonScript();
+
+        const imgDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/ena24';
+        const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json';
+        const stage = "start";
+        const noQueries = 3;
+        const encoderDirectory = __dirname + '/../scripts/encoder';
+        script.runPythonScript(imgDirectory, lablDirectory, stage, noQueries, encoderDirectory);
     })
 
     app.get('/module/dir', (req, res) => {
@@ -175,25 +173,47 @@ function startExpressServer() {
 
     })
 
+    const execFile = require('child_process').execFile;
+    app.get('/run/exe', (req, res) => {
+        const imgDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/ena24';
+        const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json';
+        const stage = "start";
+        const noQueries = 3;
+        const encoderDirectory = __dirname + '/../scripts/encoder';
+
+        const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/active_learning/dist/main'
+        execFile(path, [imgDirectory, lablDirectory, stage, noQueries, encoderDirectory], function (err, data) {
+            if (err) throw err;
+            console.log('result: ', data);
+            res.send(data);
+        })
+    })
+
     // MOCKING 
 
     const resultsPath = "/Users/ozogiz01/OneDrive\ -\ StepStone\ Group/Desktop/ELA\ demo/results";
     app.use(express.static(resultsPath));
 
+    // variables
+    let imgDirectory = '';
+    let lablDirectory = '';
+    let noQueries = 0;
     let species = [];
 
     app.post('/start-training', (req, res) => {
         const parsedReq = JSON.parse(req.body)
-        const imagesDirectory = parsedReq.imagesDirectory;
-        // const labelsDirectory = parsedReq.labelsDirectory;
-        const speciesReceived = parsedReq.species;
-        // const queries = parsedReq.noQueries;
 
-        // console.log(imagesDirectory);
+        const imagesDirectory = parsedReq.imagesDirectory;
+        const labelsDirectory = parsedReq.labelsDirectory;
+        const queries = parsedReq.noQueries;
+        const speciesReceived = parsedReq.species;
+
+        imgDirectory = imagesDirectory;
+        lablDirectory = labelsDirectory;
+        noQueries = queries;
+        species = speciesReceived;
 
         app.use(express.static(imagesDirectory));
-        // labels = labelsDirectory;
-        species = speciesReceived;
 
         // run python scripts
         //  prep data

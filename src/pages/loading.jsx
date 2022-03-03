@@ -40,6 +40,8 @@ class LoadingPage extends Component {
         });
     }
 
+    // if current round != 1 continue-training
+
     if (this.props.params.page === 'results') {
       fetch('http://localhost:8000/finish-training')
         .then(res => res.text())
