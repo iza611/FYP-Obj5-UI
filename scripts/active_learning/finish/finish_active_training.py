@@ -7,8 +7,9 @@ import seaborn as sns
 from keras.models import load_model
 from os.path import exists
 from os import mkdir
+import sys
 
-from fake_API import get_accuracies, get_loss, get_queriesId, get_labels, get_species, get_labelsGiven
+from fake_API import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
 from classifier import get_model
 
 def calculate_and_save_results(dataset, save_dir):
@@ -84,9 +85,9 @@ def metrics(dataset, save_dir):
     plt.close()
     
     model = load_model(save_dir + '/model')
-    species = np.array(get_species())
+    species = np.array(get_species_id())
     number_of_species = len(species) 
-    # species_categories = np.arange(number_of_species) # [0,1,2,...,21]
+    species_name = get_species_name()
     
     # no. images
     all_occurences = []
@@ -110,7 +111,7 @@ def metrics(dataset, save_dir):
 
     all_occurences = np.asarray(all_occurences)
 
-    plt.bar(species, all_occurences)
+    plt.bar(species_name, all_occurences)
     plt.title("Number of images")
     plt.savefig(save_dir + '/metrics/no_images.png')
     plt.close()
@@ -119,13 +120,17 @@ def metrics(dataset, save_dir):
     array_predictions = model.predict(dataset.input_test)
     output_predictions_reshaped = reshape_array_probability_predictions_to_int_class_prediction(array_predictions, array_predictions.shape[0])
     
-    conf_matrix = confusion_matrix(dataset.output_test, output_predictions_reshaped)
+    print(dataset.output_test) # [22  6 22]
+    test_different_output = [22, 22, 6]
+    
+    conf_matrix = confusion_matrix(test_different_output, output_predictions_reshaped)
     conf_matrix_normalised = conf_matrix.astype('float') / conf_matrix.sum(axis=1)[:, np.newaxis]
 
     plt.figure()
-    heatmap = sns.heatmap(conf_matrix_normalised, annot=True, fmt='.2f', xticklabels=species, yticklabels=species)
+    heatmap = sns.heatmap(conf_matrix_normalised, annot=True, fmt='.2f', xticklabels=species_name, yticklabels=species_name)
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha="right")
-    heatmap.xaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=45, ha="right")
+    heatmap.xaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=60, ha="right")
+    heatmap.figure.subplots_adjust(left = 0.3, bottom = 0.3)
     plt.title("Confusion matrix")
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
@@ -154,7 +159,7 @@ def metrics(dataset, save_dir):
     for cat_id in range(number_of_species):
         sensitivity[cat_id] = TP[cat_id] / occurences_in_test_set[cat_id]
 
-    plt.bar(species, sensitivity)
+    plt.bar(species_name, sensitivity)
     plt.title("Sensitivity")
     # plt.show()
     plt.savefig(save_dir + '/metrics/sensitivity.png')
@@ -165,7 +170,7 @@ def metrics(dataset, save_dir):
     for cat_id in range(number_of_species):
         specificity[cat_id] = TN[cat_id] / (FP[cat_id] + TN[cat_id])
 
-    plt.bar(species, specificity)
+    plt.bar(species_name, specificity)
     plt.title("Specificity")
     # plt.show()
     plt.savefig(save_dir + '/metrics/specificity.png')
@@ -179,7 +184,7 @@ def metrics(dataset, save_dir):
         else:
             precision[cat_id] = TP[cat_id] / (TP[cat_id] + FP[cat_id])
 
-    plt.bar(species, precision)
+    plt.bar(species_name, precision)
     plt.title("Precision")
     # plt.show()
     plt.savefig(save_dir + '/metrics/precision.png')

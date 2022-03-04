@@ -5,7 +5,6 @@ from tensorflow.random import set_seed
 from tensorflow.keras.callbacks import EarlyStopping
 from os.path import exists
 
-from data import Data
 from fake_API import get_noQueries, get_queriesId, get_labels, get_saveDir
 from classifier import get_model
 
@@ -47,7 +46,6 @@ def calculate_accuracy(dataset):
         
         save(save_directory + '/accuracy.npy', acc)
         save(save_directory + '/loss.npy', loss)
-    
 
 # step 2 - get query ids for the next round
 

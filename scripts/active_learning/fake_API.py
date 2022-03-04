@@ -1,6 +1,7 @@
 from numpy import load, array, full
 from os import getcwd, listdir
 from sys import argv, stdout
+import requests
 
 from data import Data
 
@@ -14,7 +15,7 @@ def get_imgDir():
 def get_lblDir():
     lblDir = argv[2]
     return lblDir
-    # return '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json'
+    return '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json'
 
 def get_stage():
     stage = argv[3]
@@ -28,15 +29,6 @@ def get_noQueries():
     # return 3
 
 def get_encoderPath():
-    # active_learning_path = getcwd()
-    # arr1 = listdir('.')
-    # print(active_learning_path)
-    # print(arr1)
-    # arr2 = listdir('./scripts/active_learning/start/encoder')
-    # print(arr2)
-    # stdout.flush()
-    
-    # return active_learning_path + '/scripts/active_learning/start/encoder'
     encoderPath = argv[5]
     return encoderPath
 
@@ -83,7 +75,6 @@ def get_loss():
     # return loss
     return [56.9, 57.1, 53.5, 55.3, 48.5, 36.2, 35.3, 22.2, 20.1, 13.2, 8.3, 0.01]
 
-
 # <-------------- * Server * --------------> #
 
 def get_saveDir():
@@ -92,14 +83,14 @@ def get_saveDir():
 def post_queriesIds(ids):
     return
 
+def post_queriesAnnotationIds(input_annotation_id):
+    return
+
 def get_queriesId():
     query_ids = array([[1, 4, 5]])
     dim = query_ids.shape[0] * query_ids.shape[1]
     query_ids = query_ids.reshape(dim)
     return query_ids
-
-def post_queriesAnnotationIds(input_annotation_id):
-    return
 
 def get_labels():
     labels = array([[22, 22, 6]])
@@ -114,13 +105,18 @@ def get_labelsGiven():
     labels_given = full(dataset.train_dataset_size, -1)
     for i, label in list(zip(query_ids,labels)):
         labels_given[i] = label
-    # print(type(labels_given))
-    # print(type(labels_given[0]))
-    # stdout.flush()
     return labels_given
 
-def get_species():
-    return [6, 22]
+def post_species_dictionary(species):
+    print('post species')
+    print('species:')
+    print(species)
+    return
 
-# def get_queriesAnnotationId():
-#     return ['0a0b939d-1dfb-11ea-86a0-5cf370671a19', '0a1cbe58-1dfb-11ea-847d-5cf370671a19', '0a2a9cd2-1dfa-11ea-aaa2-5cf370671a19']
+def get_species_name():
+    species = ['Virginia Opossum', 'American Black Bear']
+    return species
+
+def get_species_id():
+    species = [6, 22]
+    return species

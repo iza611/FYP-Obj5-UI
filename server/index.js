@@ -145,20 +145,6 @@ function startExpressServer() {
         pythonScript.runPythonScript();
     });
 
-    app.get('/start/active/learning', (req, res) => {
-        const script = new ActiveLearning();
-        script.on('completed', (results) => {
-            res.send(results);
-        });
-
-        const imgDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/ena24';
-        const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json';
-        const stage = "start";
-        const noQueries = 3;
-        const encoderDirectory = __dirname + '/../scripts/encoder';
-        script.runPythonScript(imgDirectory, lablDirectory, stage, noQueries, encoderDirectory);
-    })
-
     app.get('/module/dir', (req, res) => {
         res.send(__dirname);
         // res.send(`file://${path.join(__dirname, '/../scripts')}`)
@@ -171,6 +157,30 @@ function startExpressServer() {
         //     res.send(list);
         // });
 
+    })
+
+    // ACTIVE LEARNING
+
+    const saveDir = ''
+
+    let queriesAnnotations = []
+    let queriesIds = []
+
+    const speciesDictionary = {}
+    let labels = []
+
+    app.get('/start/active/learning', (req, res) => {
+        const script = new ActiveLearning();
+        script.on('completed', (results) => {
+            res.send(results);
+        });
+
+        const imgDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/ena24';
+        const lablDirectory = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/0000/data/data/Metadata (non-human images only).json';
+        const stage = "start";
+        const noQueries = 3;
+        const encoderDirectory = __dirname + '/../scripts/encoder';
+        script.runPythonScript(imgDirectory, lablDirectory, stage, noQueries, encoderDirectory);
     })
 
     const execFile = require('child_process').execFile;

@@ -2,10 +2,10 @@ import sys
 from numpy import save, load, where, array, fromstring, full
 from numpy.random import choice
 from tensorflow.keras.models import load_model
+import json
 
 from start.data_prep import get_input_and_output
-from data import Data
-from fake_API import get_imgDir, get_lblDir, get_saveDir, get_noQueries, post_queriesIds, post_queriesAnnotationIds, get_encoderPath, get_labelsGiven
+from fake_API import get_imgDir, get_lblDir, get_saveDir, get_noQueries, post_queriesIds, post_queriesAnnotationIds, get_encoderPath, get_labelsGiven, post_species_dictionary
 
 def data_prep():
     input_location = get_imgDir()
@@ -61,3 +61,18 @@ def get_queries(dataset, initial):
     post_queriesAnnotationIds(queries_annotation_id)
     print(queries_id)
     print(queries_annotation_id)
+
+def species_prep():
+    labels_directory = get_lblDir()
+    file = open(labels_directory)
+    data = json.load(file)
+    
+    species = {}
+    
+    for i in range(len(data["categories"])):
+        name = data["categories"][i]["name"]
+        iD = data["categories"][i]["id"]
+        species[name] = iD
+        
+    post_species_dictionary(species)
+    
