@@ -9,56 +9,61 @@ from os.path import exists
 from os import mkdir
 import sys
 
-from fake_API import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
+from API import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
 from classifier import get_model
+
 
 def calculate_and_save_results(dataset, save_dir):
     model(dataset, save_dir)
-    
+
     if not exists(save_dir + "/metrics"):
         mkdir(save_dir + "/metrics")
-        
+
     metrics(dataset, save_dir)
-    
+
     # embeddings_projector(save_dir)
+
 
 def model(dataset, save_dir):
     model = get_model(dataset.input_embeddings_dim)
-    
+
     query_ids = get_queriesId()
     labels = get_labels()
     dataset.save_for_training(query_ids, labels)
-        
+
     set_seed(7)
-    model.fit(dataset.input_train_labelled, 
-              dataset.output_train_labelled, 
-              epochs=1000, 
+    model.fit(dataset.input_train_labelled,
+              dataset.output_train_labelled,
+              epochs=1000,
               batch_size=50,
               callbacks=[
                   EarlyStopping(monitor='loss',
                                 min_delta=0.001,
                                 patience=3,
                                 restore_best_weights=True)
-                ])
+              ])
     model.save(save_dir + '/model')
-    
+
     output_train_preds = model.predict(dataset.input_train)
-    output_train_preds = reshape_array_probability_predictions_to_int_class_prediction(output_train_preds, output_train_preds.shape[0])
+    output_train_preds = reshape_array_probability_predictions_to_int_class_prediction(
+        output_train_preds, output_train_preds.shape[0])
     labels_given = get_labelsGiven()
-    
+
     output_train_combined = []
     for output_id in range(dataset.train_dataset_size):
         if (labels_given[output_id] != -1):
             output_train_combined.append(labels_given[output_id])
-            
+
         else:
             output_train_combined.append(output_train_preds[output_id])
-    
+
     output_test_preds = model.predict(dataset.input_test)
-    output_test_preds = reshape_array_probability_predictions_to_int_class_prediction(output_test_preds, output_test_preds.shape[0])
-    
+    output_test_preds = reshape_array_probability_predictions_to_int_class_prediction(
+        output_test_preds, output_test_preds.shape[0])
+
     np.save(save_dir + '/output_train_combined.npy', output_train_combined)
     np.save(save_dir + '/output_test_preds.npy', output_test_preds)
+
 
 def metrics(dataset, save_dir):
     # accuracy
@@ -71,7 +76,7 @@ def metrics(dataset, save_dir):
     plt.legend()
     plt.savefig(save_dir + '/metrics/accuracy.png')
     plt.close()
-    
+
     # loss
     loss = get_loss()
     no_rounds = len(loss)
@@ -83,20 +88,20 @@ def metrics(dataset, save_dir):
     # plt.show()
     plt.savefig(save_dir + '/metrics/loss.png')
     plt.close()
-    
+
     model = load_model(save_dir + '/model')
     species = np.array(get_species_id())
-    number_of_species = len(species) 
+    number_of_species = len(species)
     species_name = get_species_name()
-    
+
     # no. images
     all_occurences = []
-    for specie in species: 
+    for specie in species:
         occurences = np.count_nonzero(dataset.outputY == specie)
         all_occurences.append(occurences)
-        
+
     occurences_in_test_set = []
-    for specie in species: 
+    for specie in species:
         occurences = np.count_nonzero(dataset.output_test == specie)
         occurences_in_test_set.append(occurences)
 
@@ -118,42 +123,48 @@ def metrics(dataset, save_dir):
 
     # confusion matrix
     array_predictions = model.predict(dataset.input_test)
-    output_predictions_reshaped = reshape_array_probability_predictions_to_int_class_prediction(array_predictions, array_predictions.shape[0])
-    
-    print(dataset.output_test) # [22  6 22]
-    test_different_output = [22, 22, 6]
-    
-    conf_matrix = confusion_matrix(test_different_output, output_predictions_reshaped)
-    conf_matrix_normalised = conf_matrix.astype('float') / conf_matrix.sum(axis=1)[:, np.newaxis]
+    output_predictions_reshaped = reshape_array_probability_predictions_to_int_class_prediction(
+        array_predictions, array_predictions.shape[0])
+
+    # print(dataset.output_test) # [22  6 22]
+    # test_different_output = [22, 22, 6]
+
+    conf_matrix = confusion_matrix(
+        dataset.output_test, output_predictions_reshaped)
+    conf_matrix_normalised = conf_matrix.astype(
+        'float') / conf_matrix.sum(axis=1)[:, np.newaxis]
 
     plt.figure()
-    heatmap = sns.heatmap(conf_matrix_normalised, annot=True, fmt='.2f', xticklabels=species_name, yticklabels=species_name)
-    heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha="right")
-    heatmap.xaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=60, ha="right")
-    heatmap.figure.subplots_adjust(left = 0.3, bottom = 0.3)
+    heatmap = sns.heatmap(conf_matrix_normalised, annot=True,
+                          fmt='.2f', xticklabels=species_name, yticklabels=species_name)
+    heatmap.yaxis.set_ticklabels(
+        heatmap.yaxis.get_ticklabels(), rotation=0, ha="right")
+    heatmap.xaxis.set_ticklabels(
+        heatmap.yaxis.get_ticklabels(), rotation=60, ha="right")
+    heatmap.figure.subplots_adjust(left=0.3, bottom=0.3)
     plt.title("Confusion matrix")
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
     plt.savefig(save_dir + '/metrics/conf_matrix.png')
     plt.close()
-    
+
     # sensitivity & precision
     conf_matrix = np.asarray(conf_matrix)
     columns_sum = np.sum(conf_matrix, axis=0)
     rows_sum = np.sum(conf_matrix, axis=1)
     matrix_sum = np.sum(conf_matrix)
-    
+
     TP = np.empty((number_of_species,))
     FP = np.empty((number_of_species,))
     FN = np.empty((number_of_species,))
     TN = np.empty((number_of_species,))
-    
+
     for cat_id in range(number_of_species):
         TP[cat_id] = conf_matrix[cat_id, cat_id]
         FP[cat_id] = columns_sum[cat_id] - TP[cat_id]
         FN[cat_id] = rows_sum[cat_id] - TP[cat_id]
         TN[cat_id] = matrix_sum - (TP[cat_id] + FP[cat_id] + FN[cat_id])
-        
+
     sensitivity = np.empty((number_of_species,))
 
     for cat_id in range(number_of_species):
@@ -164,7 +175,7 @@ def metrics(dataset, save_dir):
     # plt.show()
     plt.savefig(save_dir + '/metrics/sensitivity.png')
     plt.close()
-    
+
     specificity = np.empty((number_of_species,))
 
     for cat_id in range(number_of_species):
@@ -175,7 +186,7 @@ def metrics(dataset, save_dir):
     # plt.show()
     plt.savefig(save_dir + '/metrics/specificity.png')
     plt.close()
-    
+
     precision = np.empty((number_of_species,))
 
     for cat_id in range(number_of_species):
@@ -190,10 +201,13 @@ def metrics(dataset, save_dir):
     plt.savefig(save_dir + '/metrics/precision.png')
     plt.close()
 
+
 def embeddings_projector(save_dir):
     return
 
 # [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] -> 2
+
+
 def reshape_array_probability_predictions_to_int_class_prediction(array_predictions, number_of_predictions):
     predictions_reshaped = []
     for pred in range(number_of_predictions):

@@ -7,7 +7,8 @@ class LoadingPage extends Component {
     loading: true,
     imgDir: this.props.params.imgDir.replace(/QcJkC/g, "/").replace(/HK3JE/g, " "),
     lblDir: this.props.params.lblDir.replace(/QcJkC/g, "/").replace(/HK3JE/g, " "),
-    species: this.props.params.species.split(","),
+    speciesOrSaveDir: this.props.params.speciesOrSaveDir.replace(/QcJkC/g, "/").replace(/HK3JE/g, " "),
+    // species: this.props.params.species.split(","),
     queries: this.props.params.queries
   }
 
@@ -23,13 +24,26 @@ class LoadingPage extends Component {
   }
 
   componentDidMount = () => {
-    // console.log(this.props.params);
+
     if (this.props.params.page === 'activelearning') {
-      const bodyText = this.stateToJson();
-      fetch('http://localhost:8000/start-training', {
-        method: 'POST',
-        body: bodyText
-      })
+      if(this.props.params.round === '1') {
+        const bodyText = this.stateToJson();
+        fetch('http://localhost:8000/start-training', {
+          method: 'POST',
+          body: bodyText
+        })
+          .then(res => res.text())
+          .then((data) => {
+            console.log('Success', data);
+            this.setState({ loading: false });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      // if current round != 1 continue-training
+      else {
+        fetch('http://localhost:8000/continue-training')
         .then(res => res.text())
         .then((data) => {
           console.log('Success', data);
@@ -38,9 +52,8 @@ class LoadingPage extends Component {
         .catch((error) => {
           console.log(error);
         });
+      }
     }
-
-    // if current round != 1 continue-training
 
     if (this.props.params.page === 'results') {
       fetch('http://localhost:8000/finish-training')
@@ -58,17 +71,18 @@ class LoadingPage extends Component {
   stateToJson = () => {
     const imgDirJson = "\"" + this.state.imgDir + "\"";
     const lblDirJson = "\"" + this.state.lblDir + "\"";
-    const species = this.state.species;
+    const speciesOrSaveDir = this.state.speciesOrSaveDir;
     const queries = "\"" + this.state.queries + "\"";
 
-    let speciesJson = species.map((specie) => "\"" + specie + "\"");
-    speciesJson.slice(0, speciesJson.length); // remove last comma
-    speciesJson = "[" + speciesJson + "]";
+    // let speciesJson = species.map((specie) => "\"" + specie + "\"");
+    // speciesJson.slice(0, speciesJson.length); // remove last comma
+    // speciesJson = "[" + speciesJson + "]";
+    const saveDirJson = "\"" + speciesOrSaveDir + "\"";
 
     const json = "{" +
       "\"imagesDirectory\":" + imgDirJson + "," +
       "\"labelsDirectory\":" + lblDirJson + "," +
-      "\"species\":" + speciesJson + "," +
+      "\"saveDirectory\":" + saveDirJson + "," +
       "\"noQueries\":" + queries +
       "}";
 

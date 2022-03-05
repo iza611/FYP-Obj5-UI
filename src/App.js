@@ -29,7 +29,7 @@ class App extends Component {
 
           <NavBar />
 
-          <div>
+          {/* <div>
             <button onClick={this.handleClick}>run node script</button>
             <span className='text-light'>{this.state.serverMessage}</span>
             <button onClick={this.handleClick2}>run node script2</button>
@@ -41,7 +41,7 @@ class App extends Component {
             <button onClick={this.handleClick7}>test ipc</button>
             <button onClick={this.handleClick8}>test non-module server(from folder)</button>
             <button onClick={this.handleClick9}>run exe file</button>
-          </div>
+          </div> */}
 
           <div className="content">
             <Routes>
@@ -49,7 +49,7 @@ class App extends Component {
               <Route path="/new" element={<NewDatasetPage />} />
               <Route path="/existing" element={<ExistingProjectPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/loading/:page/:imgDir/:lblDir/:species/:rounds/:queries/:round" element={<LoadingWrapper />} />
+              <Route path="/loading/:page/:imgDir/:lblDir/:speciesOrSaveDir/:rounds/:queries/:round" element={<LoadingWrapper />} />
               <Route path="/activelearning/:rounds/:queries/:round" element={<ActiveLearningWrapper />} />
               <Route path="/results" element={<Results />} />
             </Routes>

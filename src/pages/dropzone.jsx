@@ -13,6 +13,7 @@ class DropzoneComponent extends Component {
                 <Dropzone onDrop={ (acceptedFiles) => {
                         let file_dir = acceptedFiles[0].path;
                         let dir = "error"
+                        console.log(file_dir)
                         if(this.props.acceptedType === "FOLDER") {
                             file_dir = file_dir.slice(0, file_dir.length);
                             const cut_char_idx = file_dir.lastIndexOf('/');

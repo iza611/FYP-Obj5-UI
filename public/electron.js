@@ -38,8 +38,8 @@ app.on('activate', () => {
 });
 
 const testNodeModule = require(isDev ? './../server/index.js' : '../server/index.js');
-const { ipcMain } = require('electron');
-testNodeModule.tryUsingFs();
+// const { ipcMain } = require('electron');
+// testNodeModule.tryUsingFs();
 
 // server
 // testNodeModule.startServer();
@@ -63,17 +63,17 @@ testNodeModule.startExpressServer();
 console.log("server listening on port 8000...");
 
 //python
-const pythonScript = new testNodeModule.PythonScript();
-pythonScript.on('scriptCompleted', (results) => {
-  console.log(results);
-});
-pythonScript.runPythonScript();
+// const pythonScript = new testNodeModule.PythonScript();
+// pythonScript.on('scriptCompleted', (results) => {
+//   console.log(results);
+// });
+// pythonScript.runPythonScript();
 
 
 /* ----------------------------------- Custom code starts here ------------------------------------- */
-ipcMain.on('testIpc', (event, args) => {
-  console.log('ipc works!');
-  console.log(event);
-  console.log(args);
-});
+// ipcMain.on('testIpc', (event, args) => {
+//   console.log('ipc works!');
+//   console.log(event);
+//   console.log(args);
+// });
 

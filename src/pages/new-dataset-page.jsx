@@ -8,7 +8,7 @@ class NewDatasetPage extends Component {
   state = {
     imgDir: "",
     lblDir: "",
-    species: ["dog", "cat"],
+    species: [],
     speciesError: ""
   }
 
@@ -43,6 +43,15 @@ class NewDatasetPage extends Component {
         <div style={{ border: "1px black solid", marginTop: "10px" }}></div>
 
         <p></p>
+        <div className="a-la-button">Please specify a <span style={{ textDecoration: "underline" }}>folder directory</span> where results can be saved:</div>
+        <p></p>
+        <div>
+          <input id="directory"
+            className='species-input'
+            style={{ width: "500px", border: "1px darkgoldenrod solid" }}
+            placeholder="/directory/to/folder/where/results/can/be/saved"></input>
+        </div>
+        <p></p>
         <div className="a-la-button">Please upload a <span style={{ textDecoration: "underline" }}>folder</span> with images to be labelled:</div>
         <p></p>
         <DropzoneComponent acceptedType={"FOLDER"} setDir={(dir) => this.setFolderDir(dir)} />
@@ -51,14 +60,15 @@ class NewDatasetPage extends Component {
         <div className="a-la-button">Please upload a <span style={{ textDecoration: "underline" }}>file</span> with labels for testing and evaluating model: (this will be optional in a non-demo verisons)</div>
         <p></p>
         <DropzoneComponent acceptedType={"FILE"} setDir={(dir) => this.setFileDir(dir)} />
+        
         {/* <span>{ this.state.lblDir }</span> */}
-        <p></p>
+        {/* <p></p>
         <div className="a-la-button">Specify what species are in the database:</div>
         <p></p>
         <SpeciesAdding species={this.state.species}
           speciesError={this.state.speciesError}
           onFormSubmit={this.addNewSpecie}
-          onLabelClicked={(s) => this.removeSpecie(s)} />
+          onLabelClicked={(s) => this.removeSpecie(s)} /> */}
 
         <div className="button-div">
           {this.activateWhenFilled()}
@@ -79,31 +89,39 @@ class NewDatasetPage extends Component {
     this.setState({ lblDir: dirConverted })
   }
 
-  addNewSpecie = (event) => {
-    event.preventDefault();
-    const newSpecie = event.target[0].value;
-    let speciesCopy = this.state.species.map((specie) => specie);
-    if (speciesCopy.includes(newSpecie)) {
-      this.setState({ speciesError: "\"" + newSpecie + "\" is already added to the list" });
-    }
-    else {
-      this.setState({ speciesError: "" })
-      speciesCopy.push(newSpecie);
-      this.setState({ species: speciesCopy });
-      const form = document.getElementById("species-form");
-      form.reset();
-    }
-  }
+  // addNewSpecie = (event) => {
+  //   event.preventDefault();
+  //   const newSpecie = event.target[0].value;
+  //   let speciesCopy = this.state.species.map((specie) => specie);
+  //   if (speciesCopy.includes(newSpecie)) {
+  //     this.setState({ speciesError: "\"" + newSpecie + "\" is already added to the list" });
+  //   }
+  //   else {
+  //     this.setState({ speciesError: "" })
+  //     speciesCopy.push(newSpecie);
+  //     this.setState({ species: speciesCopy });
+  //     const form = document.getElementById("species-form");
+  //     form.reset();
+  //   }
+  // }
 
-  removeSpecie = (s) => {
-    this.setState({ species: this.state.species.filter((specie) => specie !== s) })
-  }
+  // removeSpecie = (s) => {
+  //   this.setState({ species: this.state.species.filter((specie) => specie !== s) })
+  // }
 
   activateWhenFilled = () => {
-    if (this.state.imgDir !== "" && this.state.lblDir !== "" && this.state.species.length !== 0 && document.getElementById("no-queries").value !== "" && document.getElementById("no-rounds").value !== "") {
+    if (this.state.imgDir !== "" 
+       && this.state.lblDir !== "" 
+       && (this.state.species.length !== 0 || document.getElementById("directory").value !== "")
+       && document.getElementById("no-queries").value !== "" 
+       && document.getElementById("no-rounds").value !== "") {
+
+        const dir = document.getElementById("directory").value;
+        const dirConverted = dir.replace(/\//g, "QcJkC").replace(/ /g, "HK3JE").replace(/\\/g, "");
+
       return (
         <Link className="button-link"
-          to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${this.state.species}/${document.getElementById("no-rounds").value}/${document.getElementById("no-queries").value}/1`}>
+          to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${dirConverted}/${document.getElementById("no-rounds").value}/${document.getElementById("no-queries").value}/1`}>
           next
         </Link>
       );

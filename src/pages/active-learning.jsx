@@ -48,11 +48,12 @@ class ActiveLearningPage extends Component {
     }
 
     componentDidMount = () => {
-        fetch(`http://localhost:8000/query-ids/${this.state.round}`)
+        fetch(`http://localhost:8000/queries/annotations/${this.state.round}`)
             .then(res => res.text())
             .then((data) => {
                 let dataConverted = data.slice(2, data.length - 2)
                 dataConverted = dataConverted.split("\",\"")
+                console.log("dataConverted:", dataConverted)
                 this.setState({ queryIds: dataConverted });
                 let dataSize = dataConverted.length;
                 this.setState({ noQueriesReceived: dataSize });
@@ -61,12 +62,12 @@ class ActiveLearningPage extends Component {
                 console.log(error);
             });
 
-        fetch('http://localhost:8000/species')
+        fetch('http://localhost:8000/species/names')
             .then(res => res.json())
             .then((data) => {
                 this.setState({ speciesRaw: data });
                 let dataConverted = data.map((s) => [0, s]);
-                dataConverted.push([0, 'other / undefind']);
+                // dataConverted.push([0, 'other / undefind']);
                 this.setState({ species: dataConverted });
             })
             .catch((error) => {
@@ -260,7 +261,7 @@ class ActiveLearningPage extends Component {
     }
 
     sendLabel = (label) => {
-        fetch(`http://localhost:8000/label/${this.state.round}/${this.state.currentQuery}`, {
+        fetch(`http://localhost:8000/label`, {
             method: 'POST',
             body: label
         })
