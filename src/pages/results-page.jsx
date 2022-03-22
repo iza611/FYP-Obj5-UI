@@ -39,7 +39,7 @@ class Results extends Component {
     return link;
   }
 
-  getEmbeddings = () => {
+  getEmbeddingsError = () => {
     const link = "https://cdn.pixabay.com/photo/2020/11/30/18/14/smpte-color-bars-5791787_1280.png";
     return link;
   }
@@ -53,16 +53,12 @@ class Results extends Component {
           </div>
         </div>
 
-        {/* <div style={{border:"1px black solid", marginBottom:"10px"}}></div> */}
-
         <div className="a-la-button-dark">
           Results:
         </div>
 
         <div className="container" style={{ marginTop: "10px" }}>
           <div className="row" >
-            {/* <div className="col-sm a-la-button" style={{backgroundColor:"rgb(180, 180, 180)"}}>accuracy:</div> */}
-            {/* <div className="col-sm a-la-button" style={{backgroundColor:"rgb(180, 180, 180)"}}>confusion matrix:</div> */}
             <div className="col-sm a-la-button">accuracy:</div>
             <div className="col-sm a-la-button">confusion matrix:</div>
           </div>
@@ -103,21 +99,14 @@ class Results extends Component {
         <div className="container" style={{ marginTop: "10px" }}>
           <div className="row">
             <div className="col-sm a-la-button result-link">
-              <a href={this.getEmbeddings()} target="_blank" rel="noreferrer" className="result-link-text-disabled">3D embeddings visualisation &#8250;</a>
+              <a href={this.getEmbeddingsError()} target="_blank" rel="noreferrer" className="result-link-text-disabled">3D embeddings visualisation &#8250;</a>
             </div>
           </div>
         </div>
 
-        {/* <div style={{border:"1px black solid", marginTop:"10px"}}></div> */}
-
         <div className="a-la-button-dark" style={{ marginTop: "30px" }}>
           Now you can:
         </div>
-
-        {/* <div>
-          <button className="button-link">Download the trained model</button>
-          <button className="button-link" style={{ margin: "10px" }}>Download labelled images</button>
-        </div> */}
 
         <div>
           <button className="button-link-disabled" style={{ margin: "10px" }}>Improve by labelling more images &#8250;</button>
@@ -125,17 +114,6 @@ class Results extends Component {
 
       </>
     );
-  }
-
-  componentDidMount() {
-    fetch('http://localhost:8000/testlbl')
-      .then(res => res.text())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 }
 

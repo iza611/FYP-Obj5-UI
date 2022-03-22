@@ -1,4 +1,3 @@
-import wip from "./../images/work-in-progress.png"
 import flow1 from "./../images/flow1.png";
 import flow2 from "./../images/flow2.png";
 import { Link } from "react-router-dom";

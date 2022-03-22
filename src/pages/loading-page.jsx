@@ -16,7 +16,6 @@ class LoadingPage extends Component {
     return (
       <>
         <div>
-          {/* <span className="a-la-button loading-child">{text()}</span> */}
           {this.content()}
         </div>
       </>
@@ -41,8 +40,8 @@ class LoadingPage extends Component {
             console.log(error);
           });
       }
-      // if current round != 1 continue-training
-      else {
+      
+      else { // current round != 1 continue-training
         fetch('http://localhost:8000/continue-training')
         .then(res => res.text())
         .then((data) => {
@@ -73,7 +72,6 @@ class LoadingPage extends Component {
     const lblDirJson = "\"" + this.state.lblDir + "\"";
     const speciesOrSaveDir = this.state.speciesOrSaveDir;
     const queries = "\"" + this.state.queries + "\"";
-
     // let speciesJson = species.map((specie) => "\"" + specie + "\"");
     // speciesJson.slice(0, speciesJson.length); // remove last comma
     // speciesJson = "[" + speciesJson + "]";

@@ -103,32 +103,6 @@ class ActiveLearningPage extends Component {
         }
     }
 
-    renderChecks = () => {
-        const seq = Array(this.state.noQueriesReceived).fill().map((element, index) => index + 1);
-        return (
-            seq.map((idx) => {
-                if (idx < this.state.currentQuery) {
-                    return <i className="gg-check-o" key={idx}></i>;
-                }
-                if (idx === this.state.currentQuery) {
-                    if (this.state.species !== undefined) {
-                        let selected = this.state.species.find(s => s[0] === 1);
-                        if (selected === undefined) {
-                            return <i className="gg-shape-circle" key={idx}></i>;
-                        }
-                        else {
-                            return <i className="gg-check-o" key={idx}></i>;
-                        }
-                    }
-                    return <i className="gg-shape-circle" key={idx}></i>;
-                }
-                else {
-                    return <i className="gg-shape-circle" key={idx}></i>;
-                }
-            })
-        )
-    }
-
     renderSpecies = () => {
         if (this.state.species !== undefined) {
             return (
@@ -145,96 +119,6 @@ class ActiveLearningPage extends Component {
             );
         }
 
-    }
-
-    renderSubmitButton = () => {
-        const lastRound = this.state.round === this.state.noRounds;
-        const isLastInRound = this.state.currentQuery === this.state.noQueriesReceived;
-        const currentRound = parseInt(this.state.round);
-
-        let label = undefined;
-        if (this.state.species !== undefined) {
-            const selected = this.state.species.find(s => s[0] === 1);
-            if (selected !== undefined) {
-                label = selected[1];
-            }
-        };
-
-        if (isLastInRound === false) {
-            if (label === undefined) {
-                return (
-                    <div className="section3-inside">
-                        <button className='button-link-disabled' style={{ cursor: "default" }}>
-                            {/* Submit label {"&"} Go to the next queried image &#8250; */}
-                            Submit &#8250;
-                        </button>
-                    </div>
-
-                )
-            }
-            else {
-                console.log(label);
-                return (
-                    <div className="section3-inside">
-                        <button onClick={() => this.nextClicked(label)} className='button-link'>
-                            {/* Submit label {"&"} Go to the next queried image &#8250; */}
-                            Submit &#8250;
-                        </button>
-                    </div>
-                )
-            }
-        }
-
-        if (isLastInRound === true && lastRound === false) {
-            if (label === undefined) {
-                return (
-                    <div className="section3-inside">
-                        <button className="button-link-disabled" style={{ cursor: "default" }}>
-                            {/* Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250; */}
-                            Next Round &#8250;
-                        </button>
-                    </div>
-                )
-            }
-
-            else {
-                console.log(label);
-                return (
-                    <div className="section3-inside">
-                        <Link onClick={() => this.sendLabel(label)} className="button-link"
-                            to={`/loading/activelearning/null/null/${this.state.speciesRaw}/${this.state.noRounds}/${this.state.noQueries}/${currentRound + 1}`}>
-                            {/* Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250; */}
-                            Next Round &#8250;
-                        </Link>
-                    </div>
-                )
-            }
-        }
-
-        if (isLastInRound === true && lastRound === true) {
-            if (label === undefined) {
-                return (
-                    <div className="section3-inside">
-                        <button className="button-link-disabled" style={{ cursor: "default" }}>
-                            {/* Submit {"&"} Finish labelling */}
-                            Finish &#8250;
-                        </button>
-                    </div>
-                )
-            }
-            else {
-                console.log(label);
-                return (
-                    <div className="section3-inside">
-                        <Link onClick={() => this.sendLabel(label)} className="button-link"
-                            to={`/loading/results/null/null/null/null/null/null`}>
-                            {/* Submit {"&"} Finish labelling */}
-                            Finish &#8250;
-                        </Link>
-                    </div>
-                )
-            }
-        }
     }
 
     isClicked = (s) => {
@@ -258,6 +142,90 @@ class ActiveLearningPage extends Component {
             }
         });
         this.setState({ species: selectedOne });
+    }
+
+    renderSubmitButton = () => {
+        const lastRound = this.state.round === this.state.noRounds;
+        const isLastInRound = this.state.currentQuery === this.state.noQueriesReceived;
+        const currentRound = parseInt(this.state.round);
+
+        let label = undefined;
+        if (this.state.species !== undefined) {
+            const selected = this.state.species.find(s => s[0] === 1);
+            if (selected !== undefined) {
+                label = selected[1];
+            }
+        };
+
+        if (isLastInRound === false) {
+            if (label === undefined) {
+                return (
+                    <div className="section3-inside">
+                        <button className='button-link-disabled' style={{ cursor: "default" }}>
+                            Submit &#8250;
+                        </button>
+                    </div>
+
+                )
+            }
+            else {
+                console.log(label);
+                return (
+                    <div className="section3-inside">
+                        <button onClick={() => this.nextClicked(label)} className='button-link'>
+                            Submit &#8250;
+                        </button>
+                    </div>
+                )
+            }
+        }
+
+        if (isLastInRound === true && lastRound === false) {
+            if (label === undefined) {
+                return (
+                    <div className="section3-inside">
+                        <button className="button-link-disabled" style={{ cursor: "default" }}>
+                            Next Round &#8250;
+                        </button>
+                    </div>
+                )
+            }
+
+            else {
+                console.log(label);
+                return (
+                    <div className="section3-inside">
+                        <Link onClick={() => this.sendLabel(label)} className="button-link"
+                            to={`/loading/activelearning/null/null/${this.state.speciesRaw}/${this.state.noRounds}/${this.state.noQueries}/${currentRound + 1}`}>
+                            Next Round &#8250;
+                        </Link>
+                    </div>
+                )
+            }
+        }
+
+        if (isLastInRound === true && lastRound === true) {
+            if (label === undefined) {
+                return (
+                    <div className="section3-inside">
+                        <button className="button-link-disabled" style={{ cursor: "default" }}>
+                            Finish &#8250;
+                        </button>
+                    </div>
+                )
+            }
+            else {
+                console.log(label);
+                return (
+                    <div className="section3-inside">
+                        <Link onClick={() => this.sendLabel(label)} className="button-link"
+                            to={`/loading/results/null/null/null/null/null/null`}>
+                            Finish &#8250;
+                        </Link>
+                    </div>
+                )
+            }
+        }
     }
 
     nextClicked = (selected) => {

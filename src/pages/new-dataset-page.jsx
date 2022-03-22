@@ -18,17 +18,7 @@ class NewDatasetPage extends Component {
         <div style={{ paddingTop: "10px" }}>
           <div className="a-la-button">Specify number of labelling rounds and number of queries in each round:</div>
         </div>
-        {/* <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Dropdown Button
-          </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown> */}
         <div style={{marginTop:"10px"}}>
           <input id="no-rounds"
             className='species-input'
@@ -38,27 +28,29 @@ class NewDatasetPage extends Component {
             className='species-input'
             style={{ width: "100px", border: "1px darkgoldenrod solid" }}
             placeholder="no. queries"></input>
-
         </div>
-        {/* <div style={{ border: "1px black solid", marginTop: "10px" }}></div> */}
 
         <p></p>
         <div className="a-la-button">Please specify a <span style={{ textDecoration: "underline" }}>folder directory</span> where results can be saved:</div>
         <p></p>
+
         <div>
           <input id="directory"
             className='species-input'
             style={{ width: "500px", border: "1px darkgoldenrod solid" }}
             placeholder="/directory/to/folder/where/results/can/be/saved"></input>
         </div>
+
         <p></p>
         <div className="a-la-button">Please upload a <span style={{ textDecoration: "underline" }}>folder</span> with images to be labelled:</div>
         <p></p>
+
         <DropzoneComponent acceptedType={"FOLDER"} setDir={(dir) => this.setFolderDir(dir)} />
-        {/* <span>{ this.state.imgDir }</span> */}
+
         <p></p>
         <div className="a-la-button">(Optional) Please upload a <span style={{ textDecoration: "underline" }}>file</span> with labels in <a href="https://github.com/Microsoft/CameraTraps/blob/main/data_management/README.md#coco-cameratraps-format" target="_blank" rel="noreferrer">COCO Camera Traps format</a> for testing and evaluating model: </div>
         <p></p>
+        
         <DropzoneComponent acceptedType={"FILE"} setDir={(dir) => this.setFileDir(dir)} />
         
         {this.showSpecies()}
