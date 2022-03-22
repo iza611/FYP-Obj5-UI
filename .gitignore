@@ -13,9 +13,7 @@
 /dist
 
 # exe
-scripts/active_learning/dist
-scripts/active_learning/build
-scripts/active_learning/main.spec
+scripts/exec_file
 
 # misc
 .DS_Store

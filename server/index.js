@@ -1,7 +1,6 @@
 const EventEmitter = require('events');
 const { PythonShell } = require('python-shell');
 const isDev = require('electron-is-dev');
-// const path = require('path');
 const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -62,7 +61,7 @@ function startExpressServer() {
         }
 
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/active_learning/dist/main'
+            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
             execFile(path, [imagesDirectory, labelsDirectory, stage, noQueries, encoderDirectory], function (err, data) {
                 if (err) throw err;
                 res.send("start");
@@ -84,7 +83,7 @@ function startExpressServer() {
         }
 
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/active_learning/dist/main'
+            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
                 res.send("continue");
@@ -108,7 +107,7 @@ function startExpressServer() {
         }
         
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/active_learning/dist/main'
+            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
                 const resultsPath = saveDir + "/metrics";
@@ -122,7 +121,7 @@ function startExpressServer() {
     // <------ PYTHON ------> \\
 
     // save directory
-    let saveDir = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/save tmp';
+    let saveDir = '';
     
     app.get('/save/directory', (req, res) => {
         res.send(saveDir);

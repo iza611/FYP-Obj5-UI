@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-concat */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DropzoneComponent from './dropzone';
-import SpeciesAdding from "./species-adding";
+import DropzoneComponent from '../components/dropzone';
+import SpeciesAdding from "../components/species-adding";
 
 class NewDatasetPage extends Component {
   state = {

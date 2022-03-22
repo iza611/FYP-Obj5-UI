@@ -1,4 +1,4 @@
-import LoadingPage from "./loading";
+import LoadingPage from "../pages/loading-page";
 const { useParams } = require("react-router-dom");
 
 function LoadingWrapper() {

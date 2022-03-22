@@ -1,7 +1,7 @@
 {
-  "name": "react-to-electron-2",
-  "author": "Captain Electron",
-  "version": "0.1.0",
+  "name": "ELA",
+  "author": "Izabella Ozog",
+  "version": "1.0.0",
   "private": true,
   "main": "public/electron.js",
   "dependencies": {

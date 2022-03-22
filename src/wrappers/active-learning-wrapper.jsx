@@ -1,4 +1,4 @@
-import ActiveLearningPage from "./active-learning";
+import ActiveLearningPage from "../pages/active-learning-page";
 const { useParams } = require("react-router-dom");
 
 function ActiveLearningWrapper() {

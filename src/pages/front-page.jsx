@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import fox from "./../animals/fox-silhouette.svg";
+import fox from "./../images/fox-silhouette.svg";
 
 function FrontPage() {
       return (

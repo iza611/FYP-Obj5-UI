@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import wip from "./../animals/work-in-progress.png"
+import wip from "./../images/work-in-progress.png"
 
 class ExistingProjectPage extends Component  {
   state = {

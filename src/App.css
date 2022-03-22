@@ -3,70 +3,13 @@
   height: 872px;
   background: linear-gradient(
     200.96deg,
-    /* #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35% */ #8b5ab0 9.35%,
+    #8b5ab0 9.35%,
     #4e6fc3,
     #007ec3,
     #0088b2,
     #008d97,
     #008f7a
   );
-  /* background-image: url("./animals/forest2 copy.jpg"); */
-  background-size: cover;
-}
-
-.App1 {
-  text-align: center;
-  height: 872px;
-  background: linear-gradient(
-    200.96deg,
-    /* #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35% */ #8b5ab0 9.35%,
-    #4e6fc3,
-    #007ec3,
-    #0088b2,
-    #008d97,
-    #008f7a
-  );
-  /* background-image: url("./animals/forest2 copy.jpg"); */
-  background-size: cover;
-}
-
-.App2 {
-  text-align: center;
-  height: 872px;
-  background: linear-gradient(
-    200.96deg,
-    /* #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35% */ #8b5ab0 9.35%,
-    #4e6fc3,
-    #007ec3,
-    #0088b2,
-    #008d97,
-    #008f7a
-  );
-  background-image: url("./animals/forest2 copy.jpg");
-  background-size: cover;
-}
-
-.App3 {
-  text-align: center;
-  height: 872px;
-  background: linear-gradient(
-    200.96deg,
-    /* #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35% */ #8b5ab0 9.35%,
-    #4e6fc3,
-    #007ec3,
-    #0088b2,
-    #008d97,
-    #008f7a
-  );
-  background-image: url("./animals/forest1 copy.jpg");
   background-size: cover;
 }
 
