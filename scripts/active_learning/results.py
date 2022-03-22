@@ -7,9 +7,8 @@ import seaborn as sns
 from keras.models import load_model
 from os.path import exists
 from os import mkdir
-import sys
 
-from API import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
+from interface import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
 from classifier import get_model
 
 
@@ -20,8 +19,6 @@ def calculate_and_save_results(dataset, save_dir):
         mkdir(save_dir + "/metrics")
 
     metrics(dataset, save_dir)
-
-    # embeddings_projector(save_dir)
 
 
 def model(dataset, save_dir):

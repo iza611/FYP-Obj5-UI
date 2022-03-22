@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DropzoneComponent from '../components/dropzone';
 import SpeciesAdding from "../components/species-adding";
 
-class NewDatasetPage extends Component {
+class StartTrainingPage extends Component {
   state = {
     imgDir: "",
     lblDir: "",
@@ -142,4 +142,4 @@ class NewDatasetPage extends Component {
   }
 }
 
-export default NewDatasetPage;
+export default StartTrainingPage;

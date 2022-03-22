@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class ExistingProjectPage extends Component  {
+class ExistingModelPage extends Component  {
 
   render() { 
     return (
@@ -20,4 +20,4 @@ class ExistingProjectPage extends Component  {
 
 }
 
-export default ExistingProjectPage;
+export default ExistingModelPage;

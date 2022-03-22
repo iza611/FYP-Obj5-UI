@@ -1,10 +1,9 @@
-import sys
-
-from start.start_active_training import data_prep, embeddings_prep, get_queries, species_prep
-from continuation.continue_active_training import calculate_accuracy
-from finish.finish_active_training import calculate_and_save_results
-from API import get_stage, get_data, get_saveDir
+from prep import species_prep, data_prep, embeddings_prep
 from data import Data
+from query import get_queries
+from accuracy import calculate_accuracy
+from results import calculate_and_save_results
+from interface import get_stage, get_data, get_saveDir
 
 stage = get_stage()
 

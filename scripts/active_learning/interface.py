@@ -1,8 +1,6 @@
-from numpy import load, array, full, fromstring
-from os import getcwd, listdir
-from sys import argv, stdout
+from numpy import load, full, fromstring
+from sys import argv
 import requests
-import json
 
 from data import Data
 

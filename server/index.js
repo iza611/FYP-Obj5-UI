@@ -61,7 +61,7 @@ function startExpressServer() {
         }
 
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
+            const path = __dirname + '/../scripts//exec_file/dist/main'
             execFile(path, [imagesDirectory, labelsDirectory, stage, noQueries, encoderDirectory], function (err, data) {
                 if (err) throw err;
                 res.send("start");
@@ -83,7 +83,7 @@ function startExpressServer() {
         }
 
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
+            const path = __dirname + '/../scripts//exec_file/dist/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
                 res.send("continue");
@@ -107,7 +107,7 @@ function startExpressServer() {
         }
         
         if(runWithExe) {
-            const path = '/Users/ozogiz01/OneDrive - StepStone Group/Documents/explore/Brunel/FYP/UI Obj5/test/react-to-electron-2/scripts/exec_file/dist/main'
+            const path = __dirname + '/../scripts//exec_file/dist/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
                 const resultsPath = saveDir + "/metrics";

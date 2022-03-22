@@ -1,14 +1,9 @@
-import sys
-from numpy import where, load, append, save, array
-from numpy.random import choice
+from numpy import load, append, save
 from tensorflow.random import set_seed
 from tensorflow.keras.callbacks import EarlyStopping
-from os.path import exists
 
-from API import get_noQueries, get_queriesId, get_labels, get_saveDir
+from interface import get_queriesId, get_labels, get_saveDir
 from classifier import get_model
-
-# step 1 - calculate accuracy after last round
 
 
 def calculate_accuracy(dataset):
@@ -41,5 +36,3 @@ def calculate_accuracy(dataset):
 
     save(save_directory + '/accuracy.npy', acc_updated)
     save(save_directory + '/loss.npy', loss_updated)
-
-    # model.save(save_directory + '/model')
