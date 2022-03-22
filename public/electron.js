@@ -11,7 +11,7 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
-    height: 800,
+    height: 900,
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
@@ -37,43 +37,7 @@ app.on('activate', () => {
   }
 });
 
-const testNodeModule = require(isDev ? './../server/index.js' : '../server/index.js');
-// const { ipcMain } = require('electron');
-// testNodeModule.tryUsingFs();
+const localServer = require(isDev ? './../server/index.js' : '../server/index.js');
 
-// server
-// testNodeModule.startServer();
-// console.log("server listening on port 8000...");
-
-// const server = new testNodeModule.Server();
-
-// server.on('portEstablished', function(port){
-//   server.startServer(port);
-//   console.log("server listening on port ", port, "...");
-// });
-
-// server.findPort();
-
-// const { ipcMain } = require('electron');
-// ipcMain.on('request-port', (event, arg) => {
-//   event.reply('reply-port', 'pong');
-// });
-
-testNodeModule.startExpressServer();
+localServer.startExpressServer();
 console.log("server listening on port 8000...");
-
-//python
-// const pythonScript = new testNodeModule.PythonScript();
-// pythonScript.on('scriptCompleted', (results) => {
-//   console.log(results);
-// });
-// pythonScript.runPythonScript();
-
-
-/* ----------------------------------- Custom code starts here ------------------------------------- */
-// ipcMain.on('testIpc', (event, args) => {
-//   console.log('ipc works!');
-//   console.log(event);
-//   console.log(args);
-// });
-

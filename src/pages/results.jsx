@@ -103,7 +103,7 @@ class Results extends Component {
         <div className="container" style={{ marginTop: "10px" }}>
           <div className="row">
             <div className="col-sm a-la-button result-link">
-              <a href={this.getEmbeddings()} target="_blank" rel="noreferrer" className="result-link-text">3D embeddings visualisation &#8250;</a>
+              <a href={this.getEmbeddings()} target="_blank" rel="noreferrer" className="result-link-text-disabled">3D embeddings visualisation &#8250;</a>
             </div>
           </div>
         </div>
@@ -114,13 +114,13 @@ class Results extends Component {
           Now you can:
         </div>
 
-        <div>
+        {/* <div>
           <button className="button-link">Download the trained model</button>
           <button className="button-link" style={{ margin: "10px" }}>Download labelled images</button>
-        </div>
+        </div> */}
 
         <div>
-          <button className="button-link-disabled">Label more images {"&"} improve model</button>
+          <button className="button-link-disabled" style={{ margin: "10px" }}>Improve by labelling more images &#8250;</button>
         </div>
 
       </>

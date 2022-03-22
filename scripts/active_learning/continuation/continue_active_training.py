@@ -33,18 +33,13 @@ def calculate_accuracy(dataset):
     loss, acc = model.evaluate(dataset.input_test, dataset.output_test)
 
     save_directory = get_saveDir()
-    if(exists(save_directory + '/accuracy.npy') and exists(save_directory + '/loss.npy')):
-        acc_saved = load(save_directory + '/accuracy.npy')
-        loss_saved = load(save_directory + '/loss.npy')
+    acc_saved = load(save_directory + '/accuracy.npy')
+    loss_saved = load(save_directory + '/loss.npy')
 
-        acc_updated = append(acc_saved, acc)
-        loss_updated = append(loss_saved, loss)
+    acc_updated = append(acc_saved, acc)
+    loss_updated = append(loss_saved, loss)
 
-        save(save_directory + '/accuracy.npy', acc_updated)
-        save(save_directory + '/loss.npy', loss_updated)
-    else:
-        acc = array(acc)
-        loss = array(loss)
+    save(save_directory + '/accuracy.npy', acc_updated)
+    save(save_directory + '/loss.npy', loss_updated)
 
-        save(save_directory + '/accuracy.npy', acc)
-        save(save_directory + '/loss.npy', loss)
+    # model.save(save_directory + '/model')

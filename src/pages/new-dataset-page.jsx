@@ -8,7 +8,7 @@ class NewDatasetPage extends Component {
   state = {
     imgDir: "",
     lblDir: "",
-    species: [],
+    species: ["Cat", "Dog"],
     speciesError: ""
   }
 
@@ -16,7 +16,7 @@ class NewDatasetPage extends Component {
     return (
       <>
         <div style={{ paddingTop: "10px" }}>
-          <div className="a-la-button-dark">Load a new dataset and start labelling. After labelling 30% images ELA will learn how to regognise animals and label the remaining images </div>
+          <div className="a-la-button">Specify number of labelling rounds and number of queries in each round:</div>
         </div>
         {/* <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -29,7 +29,7 @@ class NewDatasetPage extends Component {
             <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> */}
-        <div>
+        <div style={{marginTop:"10px"}}>
           <input id="no-rounds"
             className='species-input'
             style={{ width: "100px", border: "1px darkgoldenrod solid" }}
@@ -40,7 +40,7 @@ class NewDatasetPage extends Component {
             placeholder="no. queries"></input>
 
         </div>
-        <div style={{ border: "1px black solid", marginTop: "10px" }}></div>
+        {/* <div style={{ border: "1px black solid", marginTop: "10px" }}></div> */}
 
         <p></p>
         <div className="a-la-button">Please specify a <span style={{ textDecoration: "underline" }}>folder directory</span> where results can be saved:</div>
@@ -57,20 +57,14 @@ class NewDatasetPage extends Component {
         <DropzoneComponent acceptedType={"FOLDER"} setDir={(dir) => this.setFolderDir(dir)} />
         {/* <span>{ this.state.imgDir }</span> */}
         <p></p>
-        <div className="a-la-button">Please upload a <span style={{ textDecoration: "underline" }}>file</span> with labels for testing and evaluating model: (this will be optional in a non-demo verisons)</div>
+        <div className="a-la-button">(Optional) Please upload a <span style={{ textDecoration: "underline" }}>file</span> with labels in <a href="https://github.com/Microsoft/CameraTraps/blob/main/data_management/README.md#coco-cameratraps-format" target="_blank" rel="noreferrer">COCO Camera Traps format</a> for testing and evaluating model: </div>
         <p></p>
         <DropzoneComponent acceptedType={"FILE"} setDir={(dir) => this.setFileDir(dir)} />
         
-        {/* <span>{ this.state.lblDir }</span> */}
-        {/* <p></p>
-        <div className="a-la-button">Specify what species are in the database:</div>
-        <p></p>
-        <SpeciesAdding species={this.state.species}
-          speciesError={this.state.speciesError}
-          onFormSubmit={this.addNewSpecie}
-          onLabelClicked={(s) => this.removeSpecie(s)} /> */}
+        {this.showSpecies()}
 
-        <div className="button-div">
+        <div className="button-div" style={{marginTop: "20px"}}>
+          <Link className="button-link" to="/" style={{marginRight:"20px"}}>Back</Link>
           {this.activateWhenFilled()}
         </div>
       </>
@@ -89,25 +83,44 @@ class NewDatasetPage extends Component {
     this.setState({ lblDir: dirConverted })
   }
 
-  // addNewSpecie = (event) => {
-  //   event.preventDefault();
-  //   const newSpecie = event.target[0].value;
-  //   let speciesCopy = this.state.species.map((specie) => specie);
-  //   if (speciesCopy.includes(newSpecie)) {
-  //     this.setState({ speciesError: "\"" + newSpecie + "\" is already added to the list" });
-  //   }
-  //   else {
-  //     this.setState({ speciesError: "" })
-  //     speciesCopy.push(newSpecie);
-  //     this.setState({ species: speciesCopy });
-  //     const form = document.getElementById("species-form");
-  //     form.reset();
-  //   }
-  // }
+  showSpecies = () => {
+    if(this.state.lblDir === "") {
+      return (
+        <div>
+          <p></p>
+          <div className="a-la-button">Specify what species are in the database:</div>
+          <p></p>
+          <SpeciesAdding species={this.state.species}
+            speciesError={this.state.speciesError}
+            onFormSubmit={this.addNewSpecie}
+            onLabelClicked={(s) => this.removeSpecie(s)} />
+        </div>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
 
-  // removeSpecie = (s) => {
-  //   this.setState({ species: this.state.species.filter((specie) => specie !== s) })
-  // }
+  addNewSpecie = (event) => {
+    event.preventDefault();
+    const newSpecie = event.target[0].value;
+    let speciesCopy = this.state.species.map((specie) => specie);
+    if (speciesCopy.includes(newSpecie)) {
+      this.setState({ speciesError: "\"" + newSpecie + "\" is already added to the list" });
+    }
+    else {
+      this.setState({ speciesError: "" })
+      speciesCopy.push(newSpecie);
+      this.setState({ species: speciesCopy });
+      const form = document.getElementById("species-form");
+      form.reset();
+    }
+  }
+
+  removeSpecie = (s) => {
+    this.setState({ species: this.state.species.filter((specie) => specie !== s) })
+  }
 
   activateWhenFilled = () => {
     if (this.state.imgDir !== "" 
@@ -122,7 +135,7 @@ class NewDatasetPage extends Component {
       return (
         <Link className="button-link"
           to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${dirConverted}/${document.getElementById("no-rounds").value}/${document.getElementById("no-queries").value}/1`}>
-          next
+          Next
         </Link>
       );
     }
@@ -130,7 +143,7 @@ class NewDatasetPage extends Component {
       return (
         <Link className="button-link-disabled"
           to={"/new"}>
-          next
+          Next
         </Link>
       );
     };

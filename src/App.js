@@ -19,16 +19,30 @@ const loadBalancer = window.require('electron-load-balancer');
 class App extends Component {
   state = {
     serverMessage: "",
-    serverMessage2: ""
+    serverMessage2: "",
+    background: "App1"
+  }
+  
+  changeBackground = () => {
+    if(this.state.background==="App1"){
+      this.setState({background: "App2"})
+    }
+    if(this.state.background==="App2"){
+      this.setState({background: "App3"})
+    }
+    if(this.state.background==="App3"){
+      this.setState({background: "App1"})
+    }
+
   }
   render() {
     return (
       <HashRouter>
 
-        <div className="App">
+        <div className={this.state.background}>
 
           <NavBar />
-
+          
           {/* <div>
             <button onClick={this.handleClick}>run node script</button>
             <span className='text-light'>{this.state.serverMessage}</span>
@@ -53,6 +67,7 @@ class App extends Component {
               <Route path="/activelearning/:rounds/:queries/:round" element={<ActiveLearningWrapper />} />
               <Route path="/results" element={<Results />} />
             </Routes>
+            {/* <button className='a-la-button-dark' onClick={this.changeBackground}></button> */}
           </div>
 
           <LicenseText />

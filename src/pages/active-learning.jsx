@@ -135,11 +135,12 @@ class ActiveLearningPage extends Component {
             return (
                 this.state.species.map((s) => {
                     return (
-                        <span className={this.isClicked(s)}
+                            <span className={this.isClicked(s)}
                             onClick={() => this.select(s)}
-                            key={Math.random()}>
+                            key={Math.random()} style={{padding:"0px", margin:"7px"}}>
                             {s[1] + " "}
-                        </span>
+                            </span>
+                        
                     );
                 })
             );
@@ -165,7 +166,8 @@ class ActiveLearningPage extends Component {
                 return (
                     <div className="section3-inside">
                         <button className='button-link-disabled' style={{ cursor: "default" }}>
-                            Submit label {"&"} Go to the next queried image &#8250;
+                            {/* Submit label {"&"} Go to the next queried image &#8250; */}
+                            Submit &#8250;
                         </button>
                     </div>
 
@@ -176,7 +178,8 @@ class ActiveLearningPage extends Component {
                 return (
                     <div className="section3-inside">
                         <button onClick={() => this.nextClicked(label)} className='button-link'>
-                            Submit label {"&"} Go to the next queried image &#8250;
+                            {/* Submit label {"&"} Go to the next queried image &#8250; */}
+                            Submit &#8250;
                         </button>
                     </div>
                 )
@@ -188,7 +191,8 @@ class ActiveLearningPage extends Component {
                 return (
                     <div className="section3-inside">
                         <button className="button-link-disabled" style={{ cursor: "default" }}>
-                            Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250;
+                            {/* Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250; */}
+                            Next Round &#8250;
                         </button>
                     </div>
                 )
@@ -200,7 +204,8 @@ class ActiveLearningPage extends Component {
                     <div className="section3-inside">
                         <Link onClick={() => this.sendLabel(label)} className="button-link"
                             to={`/loading/activelearning/null/null/${this.state.speciesRaw}/${this.state.noRounds}/${this.state.noQueries}/${currentRound + 1}`}>
-                            Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250;
+                            {/* Submit Round {currentRound + " &"} Go to the Round {currentRound + 1} &#8250;&#8250; */}
+                            Next Round &#8250;
                         </Link>
                     </div>
                 )
@@ -212,7 +217,8 @@ class ActiveLearningPage extends Component {
                 return (
                     <div className="section3-inside">
                         <button className="button-link-disabled" style={{ cursor: "default" }}>
-                            Submit {"&"} Finish labelling
+                            {/* Submit {"&"} Finish labelling */}
+                            Finish &#8250;
                         </button>
                     </div>
                 )
@@ -223,7 +229,8 @@ class ActiveLearningPage extends Component {
                     <div className="section3-inside">
                         <Link onClick={() => this.sendLabel(label)} className="button-link"
                             to={`/loading/results/null/null/null/null/null/null`}>
-                            Submit {"&"} Finish labelling
+                            {/* Submit {"&"} Finish labelling */}
+                            Finish &#8250;
                         </Link>
                     </div>
                 )

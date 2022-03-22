@@ -70,7 +70,8 @@ def metrics(dataset, save_dir):
     accuracy = get_accuracies()
     no_rounds = len(accuracy)
     rounds = np.arange(no_rounds)
-    plt.plot(rounds, accuracy, "bo", label="Training accuracy")
+    plt.figure(figsize=(13, 10), dpi=70)
+    plt.plot(rounds, accuracy, "b", label="Training accuracy")
     # plt.plot(epochs, val_accuracy, "b", label="Validation accuracy")
     plt.title("Accuracy in each round")
     plt.legend()
@@ -81,7 +82,8 @@ def metrics(dataset, save_dir):
     loss = get_loss()
     no_rounds = len(loss)
     rounds = np.arange(no_rounds)
-    plt.plot(rounds, loss, "bo", label="Training loss")
+    plt.figure(figsize=(13, 10), dpi=70)
+    plt.plot(rounds, loss, "b", label="Training loss")
     # plt.plot(epochs, val_loss, "b", label="Validation loss")
     plt.title("Training loss in each round")
     plt.legend()
@@ -116,8 +118,10 @@ def metrics(dataset, save_dir):
 
     all_occurences = np.asarray(all_occurences)
 
+    plt.figure(figsize=(13, 13), dpi=70)
     plt.bar(species_name, all_occurences)
     plt.title("Number of images")
+    plt.xticks(rotation=60, ha="right")
     plt.savefig(save_dir + '/metrics/no_images.png')
     plt.close()
 
@@ -134,14 +138,14 @@ def metrics(dataset, save_dir):
     conf_matrix_normalised = conf_matrix.astype(
         'float') / conf_matrix.sum(axis=1)[:, np.newaxis]
 
-    plt.figure()
+    plt.figure(figsize=(13, 10), dpi=70)
     heatmap = sns.heatmap(conf_matrix_normalised, annot=True,
                           fmt='.2f', xticklabels=species_name, yticklabels=species_name)
     heatmap.yaxis.set_ticklabels(
         heatmap.yaxis.get_ticklabels(), rotation=0, ha="right")
     heatmap.xaxis.set_ticklabels(
         heatmap.yaxis.get_ticklabels(), rotation=60, ha="right")
-    heatmap.figure.subplots_adjust(left=0.3, bottom=0.3)
+    heatmap.figure.subplots_adjust(left=0.2, bottom=0.2)
     plt.title("Confusion matrix")
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
@@ -170,8 +174,10 @@ def metrics(dataset, save_dir):
     for cat_id in range(number_of_species):
         sensitivity[cat_id] = TP[cat_id] / occurences_in_test_set[cat_id]
 
+    plt.figure(figsize=(13, 13), dpi=70)
     plt.bar(species_name, sensitivity)
     plt.title("Sensitivity")
+    plt.xticks(rotation=60, ha="right")
     # plt.show()
     plt.savefig(save_dir + '/metrics/sensitivity.png')
     plt.close()
@@ -181,8 +187,10 @@ def metrics(dataset, save_dir):
     for cat_id in range(number_of_species):
         specificity[cat_id] = TN[cat_id] / (FP[cat_id] + TN[cat_id])
 
+    plt.figure(figsize=(13, 13), dpi=70)
     plt.bar(species_name, specificity)
     plt.title("Specificity")
+    plt.xticks(rotation=60, ha="right")
     # plt.show()
     plt.savefig(save_dir + '/metrics/specificity.png')
     plt.close()
@@ -195,8 +203,10 @@ def metrics(dataset, save_dir):
         else:
             precision[cat_id] = TP[cat_id] / (TP[cat_id] + FP[cat_id])
 
+    plt.figure(figsize=(13, 13), dpi=70)
     plt.bar(species_name, precision)
     plt.title("Precision")
+    plt.xticks(rotation=60, ha="right")
     # plt.show()
     plt.savefig(save_dir + '/metrics/precision.png')
     plt.close()
