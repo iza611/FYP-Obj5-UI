@@ -12,8 +12,9 @@
 /build
 /dist
 
-# exe
+# Python stuff
 scripts/exec_file
+scripts/extractor
 
 # misc
 .DS_Store

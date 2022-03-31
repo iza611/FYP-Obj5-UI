@@ -16,7 +16,8 @@ class StartTrainingPage extends Component {
     return (
       <>
         <div style={{ paddingTop: "10px" }}>
-          <div className="a-la-button">Specify number of labelling rounds and number of queries in each round:</div>
+          <div className="a-la-button">Specify number of labelling rounds and number of 
+          queries in each round:</div>
         </div>
 
         <div style={{marginTop:"10px"}}>
@@ -31,7 +32,9 @@ class StartTrainingPage extends Component {
         </div>
 
         <p></p>
-        <div className="a-la-button">Please specify a <span style={{ textDecoration: "underline" }}>folder directory</span> where results can be saved:</div>
+        <div className="a-la-button">Please specify a 
+        <span style={{ textDecoration: "underline" }}>folder directory</span> 
+        where results can be saved:</div>
         <p></p>
 
         <div>
@@ -42,13 +45,18 @@ class StartTrainingPage extends Component {
         </div>
 
         <p></p>
-        <div className="a-la-button">Please upload a <span style={{ textDecoration: "underline" }}>folder</span> with images to be labelled:</div>
+        <div className="a-la-button">Please upload a 
+        <span style={{ textDecoration: "underline" }}>folder</span> 
+        with images to be labelled:</div>
         <p></p>
 
         <DropzoneComponent acceptedType={"FOLDER"} setDir={(dir) => this.setFolderDir(dir)} />
 
         <p></p>
-        <div className="a-la-button">(Optional) Please upload a <span style={{ textDecoration: "underline" }}>file</span> with labels in <a href="https://github.com/Microsoft/CameraTraps/blob/main/data_management/README.md#coco-cameratraps-format" target="_blank" rel="noreferrer">COCO Camera Traps format</a> for testing and evaluating model: </div>
+        <div className="a-la-button">(Optional) Please upload a 
+        <span style={{ textDecoration: "underline" }}>file</span> 
+        with labels in <a href="https://github.com/Microsoft/CameraTraps/blob/main/data_management/README.md#coco-cameratraps-format" target="_blank" rel="noreferrer">COCO Camera Traps format</a> 
+        for testing and evaluating model: </div>
         <p></p>
         
         <DropzoneComponent acceptedType={"FILE"} setDir={(dir) => this.setFileDir(dir)} />
@@ -120,23 +128,20 @@ class StartTrainingPage extends Component {
        && (this.state.species.length !== 0 || document.getElementById("directory").value !== "")
        && document.getElementById("no-queries").value !== "" 
        && document.getElementById("no-rounds").value !== "") {
-
+         
         const dir = document.getElementById("directory").value;
         const dirConverted = dir.replace(/\//g, "QcJkC").replace(/ /g, "HK3JE").replace(/\\/g, "");
-
-      return (
-        <Link className="button-link"
-          to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${dirConverted}/${document.getElementById("no-rounds").value}/${document.getElementById("no-queries").value}/1`}>
-          Next
-        </Link>
+        
+        return (
+          <Link className="button-link"
+            to={`/loading/activelearning/${this.state.imgDir}/${this.state.lblDir}/${dirConverted}/${document.getElementById("no-rounds").value}/${document.getElementById("no-queries").value}/1`}>
+            Next
+          </Link>
       );
     }
     else {
       return (
-        <Link className="button-link-disabled"
-          to={"/new"}>
-          Next
-        </Link>
+        <Link className="button-link-disabled" to={"/new"}>Next</Link>
       );
     };
   }

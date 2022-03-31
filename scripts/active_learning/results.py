@@ -8,11 +8,12 @@ from keras.models import load_model
 from os.path import exists
 from os import mkdir
 
-from interface import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven
+from interface import get_accuracies, get_loss, get_queriesId, get_labels, get_species_name, get_species_id, get_labelsGiven, get_saveDir
 from classifier import get_model
 
 
-def calculate_and_save_results(dataset, save_dir):
+def calculate_and_save_results(dataset):
+    save_dir = get_saveDir()
     model(dataset, save_dir)
 
     if not exists(save_dir + "/metrics"):

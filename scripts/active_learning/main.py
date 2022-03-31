@@ -23,7 +23,6 @@ if stage == 'continue':
 
 if stage == 'finish':
     dataset = get_data()
-    save_dir = get_saveDir()
 
     calculate_accuracy(dataset)
-    calculate_and_save_results(dataset, save_dir)
+    calculate_and_save_results(dataset)

@@ -13,9 +13,9 @@ class Data:
         self.input_embeddings_dim = self.get_dim(input_embeddings)
         self.inputX_dim = self.get_dim(inputX)
 
-        self.input_embeddings = self.reshape_inputs_to_1D(
-            self.input_embeddings, self.input_embeddings_dim)
-        self.inputX = self.reshape_inputs_to_1D(self.inputX, self.inputX_dim)
+        # self.input_embeddings = self.reshape_inputs_to_1D(
+        #     self.input_embeddings, self.input_embeddings_dim)
+        # self.inputX = self.reshape_inputs_to_1D(self.inputX, self.inputX_dim)
 
         self.split_to_train_and_test()
         self.split_to_train_and_test_annotation_id()
@@ -26,7 +26,8 @@ class Data:
         self.train_dataset_size = self.input_train.shape[0]
 
     def get_dim(self, input):
-        dim = input.shape[1] * input.shape[2] * input.shape[3]
+        # dim = input.shape[1] * input.shape[2] * input.shape[3]
+        dim = input.shape[1]
         return dim
 
     def reshape_inputs_to_1D(self, input, dim):

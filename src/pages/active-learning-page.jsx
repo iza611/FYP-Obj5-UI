@@ -15,7 +15,9 @@ class ActiveLearningPage extends Component {
             <>
                 <div className='section1'>
                     <div style={{ padding: "4px" }}></div>
-                    <div className="a-la-button-dark">Active Learning ~ <span style={{ fontWeight: "900" }}>Round {this.state.round}</span></div>
+                        <div className="a-la-button-dark">
+                            Active Learning ~ <span style={{ fontWeight: "900" }}>Round {this.state.round}</span>
+                        </div>
 
                     {this.renderAppropriateCounter()}
 
@@ -26,7 +28,8 @@ class ActiveLearningPage extends Component {
                 <div className='section2'>
                     <div className='section2-inside'>
                         <div>
-                            <img height={"auto"} width={"auto"} alt="icon" src={this.getImage()} style={{ border: "3px black solid", maxHeight: "330px", maxWidth: "570px" }} />
+                            <img height={"auto"} width={"auto"} alt="icon" src={this.getImage()} 
+                            style={{ border: "3px black solid", maxHeight: "330px", maxWidth: "570px" }} />
                         </div>
 
                         <div style={{ marginTop: "20px" }}>
@@ -72,7 +75,6 @@ class ActiveLearningPage extends Component {
             .catch((error) => {
                 console.log(error);
             });
-
     }
 
     getImage = () => {

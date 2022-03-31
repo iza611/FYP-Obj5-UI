@@ -6,17 +6,18 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { execFile } = require('child_process');
 
-const runWithExe = false
+const runWithExe = isDev ? false: true
 const runWithScript = !runWithExe
+
 
 class ActiveLearning extends EventEmitter {
 
-    runPythonScript(imgDirectory, lablDirectory, stage, noQueries, encoderDirectory) {
+    runPythonScript(imgDirectory, lablDirectory, stage, noQueries, extractorDirectory) {
         let options = {
             mode: 'text',
             pythonOptions: ['-u'],
             scriptPath: isDev ? __dirname + '/../scripts/active_learning/' : __dirname + '/../scripts/active_learning/',
-            args: [imgDirectory, lablDirectory, stage, noQueries, encoderDirectory]
+            args: [imgDirectory, lablDirectory, stage, noQueries, extractorDirectory]
         };
 
         PythonShell.run('main.py', options, (err, result) => {
@@ -39,32 +40,31 @@ function startExpressServer() {
         const parsedReq = JSON.parse(req.body)
         const imagesDirectory = parsedReq.imagesDirectory;
         const labelsDirectory = parsedReq.labelsDirectory;
-        // const speciesReceived = parsedReq.species;
         const queries = parsedReq.noQueries;
         const saveDirectory = parsedReq.saveDirectory;
 
         app.use(express.static(imagesDirectory));
-        // species = speciesReceived;
         noQueries = queries;
         saveDir = saveDirectory;
 
         const stage = "start";
-        const encoderDirectory = __dirname + '/../scripts/encoder';
+        const extractorDirectory = __dirname + '/../scripts/extractor';
 
         if(runWithScript) {
             const script = new ActiveLearning();
             script.on('completed', (results) => {
-                res.send("start");
+                res.send("success");
             });
 
-            script.runPythonScript(imagesDirectory, labelsDirectory, stage, noQueries, encoderDirectory);
+            script.runPythonScript(imagesDirectory, labelsDirectory, stage, noQueries, extractorDirectory);
         }
 
         if(runWithExe) {
-            const path = __dirname + '/../scripts//exec_file/dist/main'
-            execFile(path, [imagesDirectory, labelsDirectory, stage, noQueries, encoderDirectory], function (err, data) {
-                if (err) throw err;
-                res.send("start");
+            const path = __dirname + '/../scripts//exec_file/dist/main/main'
+            execFile(path, [imagesDirectory, labelsDirectory, stage, noQueries, extractorDirectory], 
+                function (err, data) {
+                    if (err) throw err;
+                    res.send("success");
             })
         }
 
@@ -76,17 +76,17 @@ function startExpressServer() {
         if(runWithScript) {
             const script = new ActiveLearning();
             script.on('completed', (results) => {
-                res.send("continue");
+                res.send("success");
             });
     
             script.runPythonScript('null', 'null', stage, noQueries, 'null');    
         }
 
         if(runWithExe) {
-            const path = __dirname + '/../scripts//exec_file/dist/main'
+            const path = __dirname + '/../scripts//exec_file/dist/main/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
-                res.send("continue");
+                res.send("success");
             })
         }
 
@@ -100,19 +100,19 @@ function startExpressServer() {
             script.on('completed', (results) => {
                 const resultsPath = saveDir + "/metrics";
                 app.use(express.static(resultsPath));
-                res.send("finish");
+                res.send("success");
             });
         
             script.runPythonScript('null', 'null', stage, noQueries, 'null');
         }
         
         if(runWithExe) {
-            const path = __dirname + '/../scripts//exec_file/dist/main'
+            const path = __dirname + '/../scripts//exec_file/dist/main/main'
             execFile(path, ['null', 'null', stage, noQueries, 'null'], function (err, data) {
                 if (err) throw err;
                 const resultsPath = saveDir + "/metrics";
                 app.use(express.static(resultsPath));
-                res.send("finish");
+                res.send("success");
             })
         }
     })
@@ -120,18 +120,22 @@ function startExpressServer() {
 
     // <------ PYTHON ------> \\
 
-    // save directory
-    let saveDir = '';
     
+    let saveDir = '';
+    let queriesIds = [];
+    let queriesAnnotations = [];
+    let speciesNames = [];
+    let speciesIds = [];
+    let speciesDict = {};
+    let labelsNames = [];
+    let labelsIds = [];
+    
+    // save directory
     app.get('/save/directory', (req, res) => {
         res.send(saveDir);
     });
 
-
     // queries
-    let queriesIds = [];
-    let queriesAnnotations = [];
-
     app.post('/queries/annotations', (req, res) => {
         let { queries } = req.body;
         queriesAnnotations.push(queries);
@@ -157,10 +161,6 @@ function startExpressServer() {
 
 
     // species
-    let speciesNames = [];
-    let speciesIds = [];
-    let speciesDict = {}
-
     app.post('/species', (req, res) => {
         let { species_names, species_ids } = req.body;
         speciesNames = species_names;
@@ -182,9 +182,6 @@ function startExpressServer() {
     });
 
     // labels
-    let labelsNames = [];
-    let labelsIds = [];
-
     app.post('/label', (req, res) => {
         const label = req.body;
         labelsNames.push(label);

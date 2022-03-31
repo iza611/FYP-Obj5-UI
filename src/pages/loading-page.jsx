@@ -33,7 +33,7 @@ class LoadingPage extends Component {
         })
           .then(res => res.text())
           .then((data) => {
-            console.log('Success', data);
+            console.log(data);
             this.setState({ loading: false });
           })
           .catch((error) => {
@@ -45,7 +45,7 @@ class LoadingPage extends Component {
         fetch('http://localhost:8000/continue-training')
         .then(res => res.text())
         .then((data) => {
-          console.log('Success', data);
+          console.log(data);
           this.setState({ loading: false });
         })
         .catch((error) => {
@@ -58,7 +58,7 @@ class LoadingPage extends Component {
       fetch('http://localhost:8000/finish-training')
         .then(res => res.text())
         .then((data) => {
-          console.log('Success', data);
+          console.log(data);
           this.setState({ loading: false });
         })
         .catch((error) => {
@@ -105,7 +105,10 @@ class LoadingPage extends Component {
     else {
       if (this.props.params.page === 'activelearning') {
         return (
-          <Navigate to={"/activelearning" + "/" + this.props.params.rounds + "/" + this.props.params.queries + "/" + this.props.params.round} />
+          <Navigate to={"/activelearning" + "/" + 
+          this.props.params.rounds + "/" + 
+          this.props.params.queries + "/" + 
+          this.props.params.round} />
         );
       }
       else {
